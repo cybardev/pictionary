@@ -13,7 +13,7 @@ Fun game for kids to learn the Mi'kmaq language.
 2. Connect to the SSH server by running `ssh group23B@ugdev.cs.smu.ca` and entering the password: `39LoudCrowdMarry`
 3. Run the following commands
 
-```
+```sh
 cd ~/public_html/dev/
 npm install fs
 npm install path
