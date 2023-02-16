@@ -1,0 +1,478 @@
+/*
+  The purpose of this file is to define the different styles and CSS requirement for the
+  Mi'kmaq language app.
+
+  Authors:  Sarah Derby - Made some starter CSS for early app development on gameplay elements
+            Sherlin Shibi - Did some of the game display, audio and design
+            Ishani Kasaju - Homepage and game play design, overwrote pther functions for late development use
+            Sainabou Demba - Homepage and game play design, overwrote pther functions for late development use
+*/
+
+/* Section for HTML tags */
+
+/*
+Background image
+
+Author: Ishani Kasaju
+*/
+body {
+    background-image: url("grass.jpg");
+    background-size: cover;
+}
+
+/* End Section for HTML tags */
+
+/*
+Section for programmer defined classes
+*/
+
+/*
+Used to hide elements
+Author: Sarah Derby
+*/
+.hiddenEle {
+    display: none;
+}
+
+/*
+Code for modal position.
+Author: Sarah Derby
+        Sainabou Demba - edited for later usage
+        Ishani Kasaju - edited for later usage
+*/
+.myModal {
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    top: 20%;
+    z-index: 2;
+    height: 60%;
+    width: 60%;
+    display: none;
+}
+
+/*
+Aligns to the right
+Author: Ishani Kasaju
+*/
+.right {
+    padding-left: 93%;
+    padding-top: 2px;
+    padding-bottom: 5px;
+}
+
+/*
+Aligns to center
+Author: Ishani Kasaju
+*/
+.center {
+    width: 50px;
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+}
+
+/*
+Modal for word bank
+Authors: Sainabou Demba
+            Sherlin Shibi
+*/
+.wBankModal {
+    display: none;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/*
+Word Bank Modal and How To Modal Content.
+Author: Sainabou Demba
+*/
+.wBank-Content {
+    border-radius: 25px;
+    background-color: beige;
+    margin: 10% auto;
+    padding: 10px;
+    border: 2px solid orange;
+    width: 30%;
+    display: flow;
+    position: relative;
+    z-index: 2;
+}
+
+/*
+ Design for the recording and teacherZone modal
+ Author: Ishani Kasaju
+ */
+.howTo-content,
+.myModal {
+    border-radius: 25px;
+    background-color: beige;
+    margin: 8% 28%;
+    padding: 40px;
+    border: 2px solid orange;
+    width: 30%;
+    display: flow;
+    position: absolute;
+    height: auto;
+    z-index: 2;
+}
+
+/*
+Word bank modal and header section
+
+Author: Sainabou Demba
+*/
+.wBankModalHeader {
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid orange;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: comic, sans-serif;
+    z-index: 1;
+}
+
+/*
+How to play modal
+Author: Ishani Kasaju
+*/
+.howTo-Modal {
+    display: none;
+    position: absolute;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid orange;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: comic, sans-serif;
+    z-index: 1;
+}
+
+/*
+The Close Button
+Author: Sainabou Demba
+*/
+.close {
+    top: 2%;
+    left: 90%;
+    position: absolute;
+    color: grey;
+    float: right;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+/*
+Centers gamebutton
+
+Author: Ishani Kasaju
+*/
+.gamebutton-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+/*
+Title
+
+Author: Ishani Kasaju
+        Sainabou Demba
+*/
+.titleBox {
+    top: 0%;
+    left: 25%;
+    position: absolute;
+    color: #aaa;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/*
+MCQ images
+Author: Sainabou Demba
+*/
+.image1 {
+    top: 50%;
+    left: 17%;
+    float: left;
+    position: absolute;
+}
+.image2 {
+    top: 50%;
+    left: 40%;
+    position: absolute;
+}
+.image3 {
+    top: 50%;
+    left: 63%;
+    float: right;
+    position: absolute;
+}
+
+/*
+Admin Upload button
+Author: Sainabou Demba
+*/
+.adminUpload {
+    top: 5%;
+    left: 10%;
+    position: absolute;
+}
+
+/*
+quit game button
+Author: Sainabou Demba
+*/
+.quitBtn {
+    top: 5%;
+    left: 80%;
+    position: absolute;
+}
+
+/*
+Open upload modal button
+Author: Sainabou Demba
+*/
+.audioBtn {
+    top: 30%;
+    left: 45%;
+    position: absolute;
+}
+
+/*
+Open recording modal button
+Author: Sainabou Demba
+*/
+.recordBtn {
+    top: 30%;
+    left: 50%;
+    position: absolute;
+}
+
+/*
+Special hover and focus functions on close buttons
+Author: Ishani Kasaju
+*/
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*
+Button CSS
+Author: Sainabou Demba
+        Ishani Kasaju
+*/
+.button {
+    background-color: rgb(66, 43, 15);
+    border-radius: 40px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 5px;
+    cursor: pointer;
+}
+
+/*
+Button hover features
+Author: Ishani Kasaju
+*/
+.button:hover {
+    transform: scale(1.1, 1.1);
+    -webkit-transform: scale(1.1, 1.1);
+    -moz-transform: scale(1.1, 1.1);
+}
+
+/*
+Two image containers (use 25% for four, and 50% for two, etc)
+
+Author: Ishani Kasaju
+*/
+.column {
+    text-align: center;
+    flex: 33.33%;
+    padding: 20px;
+}
+
+/* Section for programmer defined id's */
+
+/*
+Makes game not appear
+
+Author: Sherlin Shibi
+*/
+#game {
+    display: none;
+}
+
+/*
+adjusts audio in modal
+
+Author: Sherlin Shibi
+        Sainabou Demba
+*/
+#audio {
+    padding: 10px 15px;
+    display: inline-block;
+    justify-content: center;
+}
+
+/*
+Check true button
+
+Author: Sainabou Demba
+*/
+#checkTrue {
+    top: 65%;
+    left: 20%;
+    position: absolute;
+    z-index: 0;
+    float: left;
+    color: greenyellow;
+}
+
+/*
+Check false button
+
+Author: Sainabou Demba
+*/
+#checkFalse {
+    top: 65%;
+    left: 70%;
+    position: absolute;
+    z-index: 0;
+    float: right;
+    color: red;
+}
+
+/*
+Quetion text for T/F
+
+Author: Sainabou Demba
+*/
+#questionText {
+    left: 45%;
+    top: 40%;
+    font-family: comic, sans-serif;
+    color: rgb(66, 43, 15);
+    position: fixed;
+    z-index: 0;
+    font-size: 50px;
+}
+
+/*
+T/F image position
+
+Author: Sainabou Demba
+*/
+#questionImage {
+    top: 55%;
+    left: 38%;
+    transform: translate(-10%, -10%);
+    position: absolute;
+}
+
+/*
+T/F image
+
+Author: Sainabou Demba
+*/
+#tfImage {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border: solid 2px orange;
+    border-radius: 40px;
+}
+
+/*
+How to play button
+
+Author: Ishani Kasaju
+*/
+#howToPlayBtn {
+    top: 30%;
+    left: 20%;
+    position: absolute;
+    z-index: 0;
+}
+
+/*
+word bank button
+
+Author: Sainabou Demba
+        Sherlin  Shibi
+*/
+#wordBankBtn {
+    top: 30%;
+    left: 65%;
+    position: absolute;
+    z-index: 0;
+    float: right;
+}
+
+/*
+MCQ word display
+Author: Sherlin Shibi
+*/
+#wordDisplay {
+    left: 45%;
+    top: 40%;
+    font-family: comic, sans-serif;
+    color: rgb(66, 43, 15);
+    position: absolute;
+    z-index: 0;
+    font-size: 50px;
+}
+
+/*
+Buttons for js functions
+
+Author: Ishani Kasaju
+*/
+#jsBtns {
+    background-color: rgb(66, 43, 15);
+    border-radius: 2px;
+    color: white;
+    padding: 15px 15px;
+    text-align: center;
+    margin: 15px 15px;
+    cursor: pointer;
+}
+
+/*
+Dedication message
+Author: Sainabou Demba
+*/
+#dedicated {
+    color: white;
+    top: 60%;
+    left: 30%;
+    position: absolute;
+    font-family: comic, sans-serif;
+    font-size: 50px;
+}
+
+/*
+image heights
+Author: Ishani Kasaju
+*/
+#getImg {
+    height: 200px;
+    width: 200px;
+}
