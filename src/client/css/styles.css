@@ -16,7 +16,7 @@ Background image
 Author: Ishani Kasaju
 */
 body {
-    background-image: url("grass.jpg");
+    background-image: url("../../../assets/client/grass.jpg");
     background-size: cover;
 }
 

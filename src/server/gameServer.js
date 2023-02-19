@@ -28,8 +28,8 @@ const server = express();
 const port = 3008;
 
 //creates constants for file paths
-const AUDIO_PATH = "nov/audios",
-    IMG_PATH = "nov/images";
+const AUDIO_PATH = "../../assets/server/audio",
+    IMG_PATH = "../../assets/server/images";
 
 //variables for temporary holding of things being retrieved from server
 var audios = [],
