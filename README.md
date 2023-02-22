@@ -20,5 +20,5 @@ npm install path
 npm install express
 npm install express-fileupload
 cd ~/public_html/dev/src/server/
-node gameServer.js
+node server.js
 ```
