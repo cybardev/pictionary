@@ -25,11 +25,11 @@ const upload = require("express-fileupload");
 const server = express();
 
 //port number
-const port = 3008;
+const port = 40608;
 
 //creates constants for file paths
-const AUDIO_PATH = "../../assets/server/audio",
-    IMG_PATH = "../../assets/server/images";
+const AUDIO_PATH = "assets/server/audio",
+    IMG_PATH = "assets/server/images";
 
 //variables for temporary holding of things being retrieved from server
 var audios = [],
@@ -65,24 +65,31 @@ server.use(upload());
  * then sends this information to an object to return data to client side.
  *
  * Author: Sarah Derby
+ *         Sheikh Saad Abdullah
  */
 server.get("/getWordBank", function (req, res) {
     console.log(req.url);
 
     //loops all files in AUDIO_PATH and saves directories to array
-    audios = fs.readdirSync(path.resolve(__dirname, AUDIO_PATH)).map((wav) => {
-        return "./" + AUDIO_PATH + "/" + path.basename(wav);
-    });
+    audios = fs
+        .readdirSync(path.resolve(__dirname, "../../" + AUDIO_PATH))
+        .map((wav) => {
+            return AUDIO_PATH + "/" + path.basename(wav);
+        });
 
     //loops all files in IMG_PATH and saves directories to array
-    images = fs.readdirSync(path.resolve(__dirname, IMG_PATH)).map((img) => {
-        return "./" + IMG_PATH + "/" + path.basename(img);
-    });
+    images = fs
+        .readdirSync(path.resolve(__dirname, "../../" + IMG_PATH))
+        .map((img) => {
+            return IMG_PATH + "/" + path.basename(img);
+        });
 
     //remove file extension to gain just vocab name and save all to an array
-    words = fs.readdirSync(path.resolve(__dirname, IMG_PATH)).map((vocab) => {
-        return path.basename(vocab, path.extname(vocab));
-    });
+    words = fs
+        .readdirSync(path.resolve(__dirname, "../../" + IMG_PATH))
+        .map((vocab) => {
+            return path.basename(vocab, path.extname(vocab));
+        });
 
     //save arrays to object for easy sharing to client side
     wordbank = { vocab: words, images: images, audios: audios };
@@ -95,6 +102,7 @@ server.get("/getWordBank", function (req, res) {
  * Purpose: Recieves post request and uploads audio and img files to server.
  *
  * Author: Ishani Kasaju
+ *         Sheikh Saad Abdullah
  */
 server.post("/upload/", (req, res) => {
     console.log(req.url);
@@ -112,12 +120,12 @@ server.post("/upload/", (req, res) => {
         console.log(audFileName);
 
         //move files to new loaction in server
-        reqImgFile.mv("./" + IMG_PATH + "/" + imgFileName, function (err) {
+        reqImgFile.mv("../../" + IMG_PATH + "/" + imgFileName, function (err) {
             if (err) {
                 res.send(err);
             } else {
                 reqImgFile.mv(
-                    "./" + AUDIO_PATH + "/" + audFileName,
+                    "../../" + AUDIO_PATH + "/" + audFileName,
                     function (err) {
                         if (err) {
                             res.send(err);

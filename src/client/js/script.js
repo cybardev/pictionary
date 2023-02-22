@@ -8,7 +8,7 @@
  */
 
 //creates conection to server url
-const SERVER_URL = "http://140.184.230.209:3008";
+const SERVER_URL = "https://140.184.230.209:40608";
 
 //all global variables
 var lastCorrect,
