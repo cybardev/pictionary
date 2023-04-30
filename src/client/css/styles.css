@@ -3,6 +3,14 @@
 
 #start-page,
 #game-page {
-    display: flex;
-    margin-block: 35vh;
+  display: flex;
+  margin-block: 35vh;
+}
+
+body {
+  background-image: url("/assets/client/bg_lines.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
 }
