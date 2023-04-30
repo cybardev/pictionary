@@ -1,444 +1,81 @@
-<!--
-    This file contains all html elements used in the Mi'kmaq pictionary game.
-
-    Author: Sarah Derby     : Edited MCQ gameplay elements, edited wordbank elements,
-                              edited teacher area upload form
-            Terry Goldsmith : MCQ gameplay elements
-            Tarron Thompson : Recording elements
-            Ishani Kasaju   : Homepage design, how to play, and teacher only area
-            Sainabou Demba  : Homepage design, modals, wordbank, T/F gameplay elements,
-                              edited MCQ elements
-            Sherlin Shibi   : Edited MCQ gameplay elements, and added on parts
--->
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <!--Meta tags-->
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="keywords" content="Pictionary" />
-
-        <!--3rd party frameworks and libraries for JS and CSS -->
-
-        <!--
-      Link to bootstraps css icons and fonts.
-      Provided at https://getbootstrap.com/
-    -->
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
-        />
-
-        <!--
-      Helps create better looking alerts.
-      Provided at: https://sweetalert2.github.io/
-    -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.8/dist/sweetalert2.all.min.js"></script>
-
-        <!--
-      A framework that eases JS functions by allowing easier document selection and
-      adds additional functions.
-      Provided at: https://jquery.com/download/
-    -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-        <!--
-      CSS Link to our own CSS file.
-      Find file in our server.
-    -->
-        <link href="./src/client/css/styles.css" rel="stylesheet" />
-
-        <!--
-      JS File links to our own JS files.
-      Find all files in server, refer to files documentation for purposes.
-    -->
-        <script src="./src/client/js/script.js"></script>
-        <script src="./src/client/js/modal.js"></script>
-        <script src="./src/client/js/teacher.js"></script>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mi'kmaq Pictionary</title>
+        <style>
+            [x-cloak] {
+                display: none !important;
+            }
+        </style>
+        <link rel="stylesheet" href="src/client/css/styles.css" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
     </head>
-
-    <body onload="pullFromServer()">
-        <!--
-      Home Page Design. All elements that first appear when website is entered.
-      Features a Title, HTP button, WordBank button, Play game button, and the game dedication.
-
-      Author: Ishani Kasaju
-              Sainabou Demba
-
-    -->
-
-        <!--
-      GAME DEDICATION
-
-      Author: Sainabou Demba
-    -->
-        <div id="dedicated">
-            <p>Mikwite'tmk+t Angie</p>
-        </div>
-        <!--
-      Game title
-
-      Author: Ishani Kasaju
-    -->
-        <div class="titleBox">
-            <div id="box">
-                <img src="./assets/client/bg.png" alt="Logo" />
-            </div>
-        </div>
-
-        <!--
-      How-To-play button - Opens a modal that explains how to play the game
-
-      Author: Ishani Kasaju
-              Sainabou Demba - updated class for CSS purposes
-    -->
-        <div>
-            <button
-                class="button"
-                onclick="openModal('howTo-Modal')"
-                id="howToPlayBtn"
-            >
-                Tal mila'si
-            </button>
-        </div>
-
-        <!--
-      Word Bank Button- opens word bank modal to show all words currently in game play
-
-      Author: Sainabou Demba
-    -->
-        <div>
-            <button
-                class="button"
-                onclick="openModal('wordBankModal')"
-                id="wordBankBtn"
-            >
-                Word Bank
-            </button>
-        </div>
-
-        <!--
-      Start game button - Enters the gameplay area
-
-      Author: Sainabou Demba
-              Ishani Kasaju - updated class for CSS purposes
-    -->
-        <div id="startScreen" class="gamebutton-center">
-            <button id="start-btn" class="button" onclick="enterGame()">
-                Start Game
-            </button>
-        </div>
-
-        <!--
-      The How-To-Play Modal content. Explains how to play the games featured in the gameplay
-
-      Author: Ishani Kasaju
-              Sainabou Demba - updated classes for CSS purposes
-    -->
-        <div id="howTo-Modal" class="wBankModal">
-            <div class="howTo-content">
-                <!--The howTo Modal header-->
-                <div class="howTo-header">
-                    <span
-                        onclick="document.getElementById('howTo-Modal').style.display='none'"
-                        class="close"
-                    >
-                        &times;
-                    </span>
-                    <h2>Instructions</h2>
-                </div>
-
-                <!--Game Play instructions written by Ishani Kasaju-->
-                <div>
-                    <h3>!!Pjila'si!!</h3>
-                    <p>
-                        Mi'kmaq Picture Dictionary is a fun and interactive game
-                        to help you learn Mi'kmaq words. This game alternates
-                        between 'Multiple Choice Questions' and 'True or
-                        False'games for an interactive environment.
-                    </p>
-                    <p>
-                        Multiple Choice Question: Select the correct image out
-                        of three different images and match it to the Mi'kmaq
-                        word. Use the audio button to listen to the
-                        pronouniciation of the word and to record your own
-                        voice.
-                    </p>
-                    <p>
-                        True or False: A word and an image will be given to you;
-                        You will have to answer whether the image matches the
-                        word and determine if it's true or false.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!--
-      The WordBank features all words and images currently in game play
-
-      Author: Sainabou Demba
-              Sarah Derby - Edited answerKey div
-    -->
-        <div id="wordBankModal" class="wBankModal">
-            <div class="wBank-Content">
-                <!--Word Bank Header-->
-                <div class="wBankModalHeader">
-                    <div>WORD BANK INFO</div>
-
-                    <!--Close Button-->
-                    <span
-                        onclick="document.getElementById('wordBankModal').style.display='none'"
-                        class="close"
-                    >
-                        &times;
-                    </span>
-                </div>
-
-                <!--Div to store the images and vocab words-->
-                <div id="answerKey"></div>
-            </div>
-        </div>
-
-        <!--
-      This section features all gameplay elements for when the user hits the start game button.
-      Author: Terry Goldsmith - Base MCQ code
-              Sherlin Shibi - Edited MCQ code and added own elements
-              Sainabou Demba - T/F gameplay elements, edited MCQ/Recording/Teacher Area for CSS purposes
-              Ishani Kasaju - Teacher Area
-              Tarron Thompson - Recording Area
-              Sarah Derby - Edited MCQ, Admin upload form
-
-    -->
-        <div id="game">
-            <!--
-        Recording Area. Contains all elements required for recording users voice.
-
-        Author: Tarron Thompson
-                Sainabou Demba - edited classes for CSS purposes
-      -->
-            <div id="recording" class="myModal">
-                <!--Close modal-->
-                <div class="right">
-                    <button id="closeModal" onclick="closeModal('recording')">
-                        <i class="bi-x-square-fill"></i>
-                    </button>
-                </div>
-
-                <!--Modal contents-->
-                <div class="container text-center">
-                    <!--Start/stop recording buttons. Only one is visible at a time-->
-                    <button id="startRec" name="start" onclick="hideRec()">
-                        <i class="bi-mic-fill"></i>
-                    </button>
-                    <button
-                        id="stopRec"
-                        name="stop"
-                        class="hiddenEle"
-                        onclick="hideStop()"
-                    >
-                        <i class="bi bi-stop-fill"></i>
-                    </button>
-
-                    <!--Audio controls for recoded audio-->
-                    <audio id="audio" controls></audio>
-                </div>
-            </div>
-
-            <!--
-        Teacher Area.
-
-        This area is meant for admin users/teachers to enter their password to unlock the
-        area for uploading new image and audio files to the server.
-
-        Author: Ishani Kasaju
-                Sainabou Demba - Edited classes for CSS purposes
-      -->
-            <div id="teacherZone" class="myModal">
-                <!--Close Modal-->
-                <div class="right">
-                    <button id="closeModal" onclick="closeModal('teacherZone')">
-                        <i class="bi-x-square-fill"></i>
-                    </button>
-                </div>
-
-                <!--Area to enter password-->
-                <div id="adminArea">
-                    <p>Please Enter Password</p>
-                    <input type="password" id="adminPassword" />
-                    <button class="btn btn-success" onclick="checkCode()">
-                        Confirm
-                    </button>
-                </div>
-            </div>
-
-            <!--
-            This area is only unlocked through a password and allows user to upload image and
-            audio files.
-
-            Author: Ishani Kasaju
-                    Sarah Derby - created form
-                    Sainabou - Edited classes for CSS purposes
-        -->
-            <div id="addVocabArea" class="myModal">
-                <!--close modal-->
-                <div class="right">
-                    <button onclick="closeModal('addVocabArea')">
-                        <i class="bi-x-square-fill"></i>
-                    </button>
-                </div>
-
-                <!--
-          Upload instructions.
-
-          Written by: Ishani Kasaju
-          Edited by: Sarah Derby
-        -->
-                <div>
-                    <p>
-                        If you have questions regarding how to upload, please
-                        refer to instruction document. Please ensure when you
-                        are uploading files that file names are as follows:
-                    </p>
-                    <p>Image File = VocabName.jpg</p>
-                    <p>Audio File = VocabName.wav</p>
-                </div>
-
-                <!--
-          Form for image and audio upload. When form is submitted, if successful files are uploaded to server.
-
-          Author: Sarah Derby
-                  Sainabou Demba - edited classes for CSS purposes
-        -->
-                <form
-                    action="http://140.184.230.209:3008/upload/"
-                    enctype="multipart/form-data"
-                    method="POST"
-                >
-                    <div class="form-group">
-                        <!--Input group for file upload-->
-                        <div class="input-group mb-3">
-                            <!--Image file upload-->
-                            <div class="custom-file">
-                                <input
-                                    type="file"
-                                    class="custom-file-input"
-                                    id="imgFile"
-                                    name="imgFile"
-                                />
-                                <label class="custom-file-label" for="imgFile"
-                                    >Choose Image File</label
-                                >
-                            </div>
-
-                            <br />
-
-                            <!--Audio file upload-->
-                            <div class="custom-file">
-                                <input
-                                    type="file"
-                                    class="custom-file-input"
-                                    id="audFile"
-                                    name="audFile"
-                                />
-                                <label class="custom-file-label" for="audFile"
-                                    >Choose Audio File</label
-                                >
-                            </div>
-                        </div>
-
-                        <!--Submit form button-->
-                        <button class="btn btn-primary" type="submit">
-                            Upload files
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <!--
-        This area consists of the four buttons meant to upload file by the admin, a button to
-        quit the game, a button to play the audio of the word currently being shown, and a
-        button to record your own voice respectively.
-
-        Author: Sarah Derby
-                Sainabou Demba - Edited for CSS
-      -->
-            <div>
-                <!--  ADMIN FILE UPLOAD BUTTON-->
-                <button id="jsBtns" class="adminUpload">
-                    <i
-                        class="bi-file-lock2"
-                        onclick="openModal('teacherZone')"
-                    ></i>
-                </button>
-                <!--  GAME QUIT BUTTON-->
-                <button id="jsBtns" class="quitBtn" onclick="quitGame()">
-                    <i class="bi-x-square-fill"></i>
-                </button>
-                <!-- PLAY AUDIO BUTTON-->
-                <button id="jsBtns" class="audioBtn" onclick="playAudio()">
-                    <i class="bi-ear"></i>
-                </button>
-                <!--RECORD AUDIO BUTTON -->
+    <body x-data="globalData">
+        <section
+            class="container flex-column"
+            id="start-page"
+            x-show="!gameStarted"
+        >
+            <header class="row text-center">
+                <h1>Mi'kmaq Pictionary</h1>
+                <p>Mikwite'tmk+t Angie</p>
+            </header>
+            <main class="mt-4 row d-flex align-items-center">
+                <!-- <| mb >=> menu-btn |> -->
                 <button
-                    id="jsBtns"
-                    class="recordBtn"
-                    onclick="openModal('recording')"
+                    type="button"
+                    class="btn menu-btn fw-bold"
+                    id="mb-start-game"
+                    @click="startGame"
                 >
-                    <i class="bi-mic-fill"></i>
+                    Start Game
                 </button>
-            </div>
-
-            <!--
-        Features all elements used in the MCQ gameplay, including images and word display.
-
-        Author: Terry Goldsmith - base code
-                Sherlin Shibi - edited to our needed specifications, added a place to display the vocab word
-                Sainabou Demba - Added classes for CSS purposes
-                Sarah Derby - Small changes to fix a loading error for images, input tags are now divs
-      -->
-            <div id="MCQ">
-                <!--
-        This area shows the current word being used and learned by the player.
-        -->
-                <div id="wordDisplay">
-                    <span id="word" class="center"></span>
+                <button type="button" class="btn menu-btn" id="mb-instructions">
+                    Tali mila'tmk
+                </button>
+                <button type="button" class="btn menu-btn" id="mb-word-bank">
+                    Klusuwaqnn
+                </button>
+            </main>
+        </section>
+        <section id="game-page" class="container" x-cloak x-show="gameStarted">
+            <aside id="menu-btn-grp">
+                <!-- <| gb >=> game-btn |> -->
+                <button
+                    type="button"
+                    class="btn game-btn"
+                    id="gb-main-menu"
+                    @click="endGame"
+                >
+                    Main Menu
+                </button>
+                <!-- <button type="button" class="btn game-btn" id="gb-prev">Previous</button> -->
+                <button type="button" class="btn game-btn" id="gb-hint">
+                    Hint
+                </button>
+                <button type="button" class="btn game-btn" id="gb-word-bank">
+                    Klusuwaqnn
+                </button>
+            </aside>
+            <main id="game-section">
+                <button id="btn-listen">Listen</button>
+                <h2 id="current-word" x-text="currentWord"></h2>
+                <button id="btn-record">Record</button>
+                <div id="options">
+                    <template x-for="opt in opts">
+                        <button>
+                            <img :src="opt" :alt="desc[opt]" />
+                        </button>
+                    </template>
                 </div>
-
-                <!--
-            These divs will hold the images from the js function displayImages()
-        -->
-                <div>
-                    <div class="image1" id="image1"></div>
-                    <div class="image2" id="image2"></div>
-                    <div class="image3" id="image3"></div>
-                </div>
-            </div>
-
-            <!--
-        Contains all elements used in a round of true or false gameplay.
-
-        Author: Sainabou Demba
-      -->
-            <div id="TF">
-                <!--Displays current questions word-->
-                <span id="questionText"></span>
-
-                <!--The image for the current question-->
-                <div id="questionImage"></div>
-
-                <!--The is it true or is it false buttons-->
-                <button id="checkTrue" class="button" onclick="choose(true)">
-                    <i class="bi bi-check-circle-fill"></i>
-                </button>
-                <button id="checkFalse" class="button" onclick="choose(false)">
-                    <i class="bi bi-x-circle-fill"></i>
-                </button>
-            </div>
-        </div>
-
-        <!--
-      ****IMPORTANT****
-      This script must be defined at the buttom of the document to properly initialize DOM elements for the recording feature.
-    -->
-        <script src="./src/client/js/recording.js"></script>
+            </main>
+        </section>
+        <script src="src/client/js/script.js"></script>
     </body>
 </html>
