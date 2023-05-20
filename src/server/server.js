@@ -68,8 +68,8 @@ server.use(upload());
  *
  * Author: Sheikh Saad Abdullah
  */
-server.get("/authenticate", function (req, res) {
-    return res.status(200).send(req.password == PASSWORD ? true : false);
+server.get("/authenticate", (req, res) => {
+    return res.status(200).send(req.data === PASSWORD);
 });
 
 /**

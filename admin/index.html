@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pictionary Admin</title>
+        <!-- <link rel="stylesheet" href="../src/client/css/styles.css" /> -->
+        <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+    </head>
+    <body x-data="alpineData">
+        <header>
+            <h1>Admin Dashboard</h1>
+        </header>
+        <main>
+            <section>
+                <form @submit.prevent="authenticate()">
+                    <header>
+                        <h2>Authentication Request</h2>
+                    </header>
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" />
+                    <label for="passphrase">Passphrase:</label>
+                    <input
+                        :type="showPass ? 'text' : 'password'"
+                        name="passphrase"
+                        id="passphrase"
+                    />
+                    <div>
+                        <input
+                            type="checkbox"
+                            @click="showPass = !showPass"
+                        />&nbsp;Show Passphrase
+                    </div>
+                    <button type="submit" id="submit">Login</button>
+                </form>
+            </section>
+        </main>
+        <script src="../src/client/js/admin.js"></script>
+    </body>
+</html>

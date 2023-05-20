@@ -12,12 +12,16 @@
  *         Sheikh Saad Abdullah
  */
 function checkCode(serverAddress) {
-    $.get(serverAddress + "/authenticate", $("#adminPassword").val(), (correctPassword) => {
-        if (correctPassword) {
-            closeModal("teacherZone");
-            openModal("addVocabArea");
-        } else {
-            Swal.fire("Incorrect Code");
+    $.get(
+        serverAddress + "/authenticate",
+        $("#adminPassword").val(),
+        (correctPassword) => {
+            if (correctPassword) {
+                closeModal("teacherZone");
+                openModal("addVocabArea");
+            } else {
+                Swal.fire("Incorrect Code");
+            }
         }
-    })
+    );
 }
