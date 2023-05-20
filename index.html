@@ -24,7 +24,7 @@
         >
             <header class="row text-center">
                 <h1>Mi'kmaq Pictionary</h1>
-                <p>Mikwite'tmk+t Angie</p>
+                <p class="sub-title">Mikwite'tmk+t Angie</p>
             </header>
             <main class="mt-4 row d-flex align-items-center">
                 <!-- <| mb >=> menu-btn |> -->
@@ -45,29 +45,27 @@
             </main>
         </section>
         <section id="game-page" class="container" x-cloak x-show="gameStarted">
-            <aside id="menu-btn-grp">
-                <!-- <| gb >=> game-btn |> -->
+            <aside>
                 <button
                     type="button"
                     class="btn game-btn"
                     id="gb-main-menu"
                     @click="endGame"
                 >
-                    Main Menu
-                </button>
-                <!-- <button type="button" class="btn game-btn" id="gb-prev">Previous</button> -->
-                <button type="button" class="btn game-btn" id="gb-hint">
-                    Hint
-                </button>
-                <button type="button" class="btn game-btn" id="gb-word-bank">
-                    Klusuwaqnn
+                    <i class="bi bi-x-lg"></i>
                 </button>
             </aside>
-            <main id="game-section">
-                <button id="btn-listen">Listen</button>
-                <h2 id="current-word" x-text="currentWord"></h2>
-                <button id="btn-record">Record</button>
-                <div id="options">
+            <main id="game-section" class="col">
+                <div class="row">
+                    <button id="btn-listen" class="btn game-btn">
+                        <i class="bi bi-volume-up-fill"></i>
+                    </button>
+                    <h2 id="current-word" x-text="currentWord"></h2>
+                    <!--<button id="btn-record" class="btn game-btn">
+                        <i class="bi bi-mic"></i>
+                    </button>-->
+                </div>
+                <div id="options" class="row">
                     <template x-for="opt in opts">
                         <button>
                             <img :src="opt" :alt="desc[opt]" />
@@ -75,6 +73,17 @@
                     </template>
                 </div>
             </main>
+            <aside id="menu-btn-grp" class="col">
+                <!-- <| gb >=> game-btn |> -->
+
+                <button type="button" class="btn game-btn" id="gb-hint">
+                    <i class="bi bi-question-lg"></i>
+                </button>
+
+                <button type="button" class="btn game-btn" id="gb-word-bank">
+                    <i class="bi bi-book"></i>
+                </button>
+            </aside>
         </section>
         <script src="src/client/js/script.js"></script>
     </body>
