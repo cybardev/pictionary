@@ -4,22 +4,24 @@
   Author: Ishani Kasaju
 */
 
-// a constant that stores the password
-const PASSWORD = "only me";
-
 /**
  * This checks the entered password to see if it is correct. If it is the upload feature is
  * unlocked, if not the user is informed of the incorrect code.
  *
  * Author: Ishani Kasaju
+ *         Sheikh Saad Abdullah
  */
-function checkCode() {
-    var triedCode = $("#adminPassword").val();
-
-    if (triedCode == PASSWORD) {
-        closeModal("teacherZone");
-        openModal("addVocabArea");
-    } else {
-        Swal.fire("Incorrect Code");
-    }
+function checkCode(serverAddress) {
+    $.get(
+        serverAddress + "/authenticate",
+        $("#adminPassword").val(),
+        (correctPassword) => {
+            if (correctPassword) {
+                closeModal("teacherZone");
+                openModal("addVocabArea");
+            } else {
+                Swal.fire("Incorrect Code");
+            }
+        }
+    );
 }

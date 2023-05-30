@@ -31,6 +31,9 @@ const port = 40608;
 const AUDIO_PATH = "assets/server/audio",
     IMG_PATH = "assets/server/images";
 
+// admin authentication passphrase
+const PASSWORD = "only me";
+
 //variables for temporary holding of things being retrieved from server
 var audios = [],
     images = [],
@@ -59,6 +62,15 @@ let allowCrossDomain = function (req, res, next) {
 //Provided by Terry Goldsmith
 server.use(allowCrossDomain);
 server.use(upload());
+
+/**
+ * Purpose: Authenticates password so teachers can access admin page
+ *
+ * Author: Sheikh Saad Abdullah
+ */
+server.get("/authenticate", (req, res) => {
+    return res.status(200).send(req.data === PASSWORD);
+});
 
 /**
  * Purpose: Recieves get information and saves audio, image and vocab words  directories from server to arrays
