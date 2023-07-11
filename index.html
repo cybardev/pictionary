@@ -15,6 +15,7 @@
             defer
             src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
         ></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body x-data="globalData">
         <section
@@ -22,69 +23,145 @@
             id="start-page"
             x-show="!gameStarted"
         >
-            <header class="row text-center">
-                <h1>Mi'kmaq Pictionary</h1>
-                <p class="sub-title">Mikwite'tmk+t Angie</p>
-            </header>
-            <main class="mt-4 row d-flex align-items-center">
-                <!-- <| mb >=> menu-btn |> -->
-                <button
-                    type="button"
-                    class="btn menu-btn fw-bold"
-                    id="mb-start-game"
-                    @click="startGame"
-                >
-                    Start Game
-                </button>
-                <button type="button" class="btn menu-btn" id="mb-instructions">
-                    Tali mila'tmk
-                </button>
-                <button type="button" class="btn menu-btn" id="mb-word-bank">
-                    Klusuwaqnn
-                </button>
-            </main>
-        </section>
-        <section id="game-page" class="container" x-cloak x-show="gameStarted">
-            <aside>
-                <button
-                    type="button"
-                    class="btn game-btn"
-                    id="gb-main-menu"
-                    @click="endGame"
-                >
-                    <i class="bi bi-x-lg"></i>
-                </button>
-            </aside>
-            <main id="game-section" class="col">
-                <div class="row">
-                    <button id="btn-listen" class="btn game-btn">
-                        <i class="bi bi-volume-up-fill"></i>
+            <div class="col vh-100">
+                <header class="row text-center">
+                    <h1>Mi'kmaq Pictionary</h1>
+                    <p class="sub-title">Mikwite'tmk+t Angie</p>
+                </header>
+                <main class="mt-4 row d-flex align-items-center">
+                    <!-- <| mb >=> menu-btn |> -->
+                    <button
+                        type="button"
+                        class="btn menu-btn fw-bold"
+                        id="mb-start-game"
+                        @click="startGame"
+                    >
+                        Start Game
                     </button>
-                    <h2 id="current-word" x-text="currentWord"></h2>
-                    <!--<button id="btn-record" class="btn game-btn">
-                        <i class="bi bi-mic"></i>
-                    </button>-->
-                </div>
-                <div id="options" class="row">
-                    <template x-for="opt in opts">
-                        <button>
-                            <img :src="opt" :alt="desc[opt]" />
-                        </button>
-                    </template>
-                </div>
-            </main>
-            <aside id="menu-btn-grp" class="col">
-                <!-- <| gb >=> game-btn |> -->
-
-                <button type="button" class="btn game-btn" id="gb-hint">
-                    <i class="bi bi-question-lg"></i>
-                </button>
-
-                <button type="button" class="btn game-btn" id="gb-word-bank">
-                    <i class="bi bi-book"></i>
-                </button>
-            </aside>
+                    <button
+                        type="button"
+                        class="btn menu-btn"
+                        id="mb-instructions"
+                        data-toggle="modal"
+                        data-target="#instructions-modal"
+                    >
+                        Tali mila'tmk
+                    </button>
+                    <button
+                        type="button"
+                        class="btn menu-btn"
+                        id="mb-word-bank"
+                    >
+                        Klusuwaqnn
+                    </button>
+                </main>
+            </div>
         </section>
+        <section
+            id="game-page"
+            class="container vw-100 m-0"
+            x-cloak
+            x-show="gameStarted"
+        >
+            <main id="game-section" class="row vh-100">
+                <section class="col">
+                    <div class="row">
+                        <section class="col">
+                            <button
+                                type="button"
+                                class="btn game-btn d-flex justify-content-start"
+                                id="gb-main-menu"
+                                @click="endGame"
+                            >
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </section>
+                        <section class="col-2">
+                            <button
+                                type="button"
+                                class="btn game-btn"
+                                id="gb-hint"
+                            >
+                                <i class="bi bi-question-lg"></i>
+                            </button>
+                            <button
+                                type="button"
+                                class="btn game-btn"
+                                id="gb-word-bank"
+                            >
+                                <i class="bi bi-book"></i>
+                            </button>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col">
+                            <!-- row 2 -->
+                            <span>
+                                <h2
+                                    id="current-word"
+                                    class="d-inline"
+                                    x-text="currentWord"
+                                ></h2>
+                            </span>
+                            <button id="btn-listen" class="btn game-btn">
+                                <i class="bi bi-volume-up-fill"></i>
+                            </button>
+                        </section>
+                    </div>
+                    <div class="row">
+                        <section class="col justify-content-evenly">
+                            <!-- row 3 -->
+                            <template x-for="opt in opts">
+                                <button>
+                                    <img
+                                        :src="opt"
+                                        :alt="desc[opt]"
+                                        class="game-img"
+                                    />
+                                </button>
+                            </template>
+                        </section>
+                    </div>
+                </section>
+            </main>
+        </section>
+        <!-- Modals -->
+        <div
+            class="modal fade"
+            id="instructions-modal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="instructions-modal-title"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="instructions-modal-title">
+                            Modal title
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">sodfdsfdf</div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="src/client/js/script.js"></script>
     </body>
 </html>
