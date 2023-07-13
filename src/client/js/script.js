@@ -7,7 +7,11 @@ const globalData = {
     atMenu: true,
     gameStarted: false,
     currentWord: "test",
-    opts: ["1", "2", "3"],
+    opts: [
+        "https://placehold.co/600x400/000000/FFFFFF/png",
+        "https://placehold.co/200x400/000000/FFFFFF/png",
+        "https://placehold.co/400x400/000000/FFFFFF/png",
+    ],
     desc: {
         1: "one",
         2: "two",

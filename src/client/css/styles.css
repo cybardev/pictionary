@@ -6,6 +6,13 @@
 #start-page,
 #game-page {
     display: flex;
+}
+
+#start-page {
+    margin-block: 19vh;
+}
+
+#game-page {
     margin-block: 35vh;
 }
 
@@ -27,6 +34,10 @@ h1 {
     -webkit-text-stroke: 4px rgb(160, 55, 81);
 }
 
+.m-0 {
+    margin: 0;
+}
+
 .sub-title {
     font-family: "Comic Neue", sans-serif;
     color: rgb(223, 136, 176);
@@ -39,11 +50,33 @@ h1 {
     font-weight: 900;
     letter-spacing: 5px;
     color: rgb(230, 168, 55);
-    -webkit-text-stroke: 2px rgb(160, 77, 0);
+    -webkit-text-stroke: 2px rgb(192, 92, 5);
+    /* -webkit-text-stroke: 2px rgb(182, 88, 1); */
+}
+
+.menu-btn:hover {
+    color: rgb(247, 116, 2);
+    /* -webkit-text-stroke: 2px rgb(230, 168, 55); */
+}
+
+.menu-btn:active {
+    color: rgb(230, 168, 55) !important;
 }
 
 .game-btn {
     color: rgb(211, 116, 79);
     font-size: 100px;
     -webkit-text-stroke-width: 4px;
+}
+.game-img {
+    height: 400px;
+    width: 400px;
+}
+
+.modal-dialog {
+    overflow-y: initial;
+}
+.modal-body {
+    height: 250px;
+    overflow-y: auto;
 }
