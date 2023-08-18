@@ -41,16 +41,18 @@
                     <button
                         type="button"
                         class="btn menu-btn"
-                        id="mb-instructions"
-                        data-toggle="modal"
-                        data-target="#instructions-modal"
+                        id="mb-word-bank"
+                        data-bs-toggle="modal"
+                        data-bs-target="#word-bank-modal"
                     >
                         Tali mila'tmk
                     </button>
                     <button
                         type="button"
                         class="btn menu-btn"
-                        id="mb-word-bank"
+                        id="mb-instructions"
+                        data-bs-toggle="modal"
+                        data-bs-target="#instructions-modal"
                     >
                         Klusuwaqnn
                     </button>
@@ -59,12 +61,12 @@
         </section>
         <section
             id="game-page"
-            class="container vw-100 m-0"
+            class="container m-0"
             x-cloak
             x-show="gameStarted"
         >
             <main id="game-section" class="row vh-100">
-                <section class="col">
+                <section class="col vw-100">
                     <div class="row">
                         <section class="col">
                             <button
@@ -81,6 +83,8 @@
                                 type="button"
                                 class="btn game-btn"
                                 id="gb-hint"
+                                data-bs-toggle="modal"
+                                data-bs-target="#instructions-modal"
                             >
                                 <i class="bi bi-question-lg"></i>
                             </button>
@@ -88,13 +92,15 @@
                                 type="button"
                                 class="btn game-btn"
                                 id="gb-word-bank"
+                                data-bs-toggle="modal"
+                                data-bs-target="#word-bank-modal"
                             >
                                 <i class="bi bi-book"></i>
                             </button>
                         </section>
                     </div>
                     <div class="row">
-                        <section class="col">
+                        <section class="col d-flex justify-content-center m-4">
                             <!-- row 2 -->
                             <span>
                                 <h2
@@ -109,10 +115,10 @@
                         </section>
                     </div>
                     <div class="row">
-                        <section class="col justify-content-evenly">
+                        <section class="col d-flex justify-content-center">
                             <!-- row 3 -->
                             <template x-for="opt in opts">
-                                <button>
+                                <button class="m-3">
                                     <img
                                         :src="opt"
                                         :alt="desc[opt]"
@@ -126,42 +132,82 @@
             </main>
         </section>
         <!-- Modals -->
+
+        <!-- Instructions Modal -->
         <div
             class="modal fade"
             id="instructions-modal"
             tabindex="-1"
-            role="dialog"
             aria-labelledby="instructions-modal-title"
             aria-hidden="true"
         >
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="instructions-modal-title">
-                            Modal title
+                            Klusuwaqnn
                         </h5>
                         <button
                             type="button"
-                            class="close"
-                            data-dismiss="modal"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
                             aria-label="Close"
                         >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
                     </div>
-                    <div class="modal-body">sodfdsfdf</div>
+                    <div class="modal-body"><h3>!!Pjila'si!!</h3>
+                    <p>
+                        Mi'kmaq Picture Dictionary is a fun and interactive game to help
+                        you learn Mi'kmaq words. This game alternates between 'Multiple
+                        Choice Questions' and 'True or False'games for an interactive
+                        environment.
+                    </p>
+                    <p>
+                        Multiple Choice Question: Select the correct image out of three
+                        different images and match it to the Mi'kmaq word. Use the audio
+                        button to listen to the pronouniciation of the word and to
+                        record your own voice.
+                    </p>
+                    <p>
+                        True or False: A word and an image will be given to you; 
+                        You will have to answer whether the image matches the word 
+                        and determine if it's true or false.
+                    </p>
+                    </div>                    
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-dismiss="modal"
-                        >
-                            Close
-                        </button>
+                        
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Word Bank Modal -->
+        <div
+            class="modal fade"
+            id="word-bank-modal"
+            tabindex="-1"
+            aria-labelledby="word-bank-modal-title"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="word-bank-modal-title">
+                            Tali mila'tmk
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        >
+                    </div>
+                    <div class="modal-body">sodfdsfdf</div>
+                    <div class="modal-footer">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <script src="src/client/js/script.js"></script>
     </body>
 </html>

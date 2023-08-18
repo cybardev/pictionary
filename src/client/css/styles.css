@@ -15,9 +15,18 @@
 #game-page {
     margin-block: 35vh;
 }
-
+#current-word {
+    background-image: url("/assets/client/plank.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    padding: 80px 100px;
+    text-align: center;
+    font-size: 90px;
+    font-family: "Comic Neue", sans-serif;
+    font-weight: 500;
+}
 body {
-    background-image: url("/assets/client/bg_lines.png");
+    background-image: url("/assets/client/bg.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -68,9 +77,19 @@ h1 {
     font-size: 100px;
     -webkit-text-stroke-width: 4px;
 }
+
+.game-btn:hover {
+    color: rgb(230, 168, 55);
+    /* -webkit-text-stroke: 2px rgb(230, 168, 55); */
+}
+
+.game-btn:active {
+    color: rgb(211, 116, 79) !important;
+}
+
 .game-img {
-    height: 400px;
-    width: 400px;
+    height: 350px;
+    width: 350px;
 }
 
 .modal-dialog {
