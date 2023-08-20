@@ -99,35 +99,43 @@
                             </button>
                         </section>
                     </div>
-                    <div class="row">
-                        <section class="col d-flex justify-content-center m-4">
-                            <!-- row 2 -->
-                            <span>
-                                <h2
-                                    id="current-word"
-                                    class="d-inline"
-                                    x-text="currentWord"
-                                ></h2>
-                            </span>
-                            <button id="btn-listen" class="btn game-btn">
-                                <i class="bi bi-volume-up-fill"></i>
-                            </button>
-                        </section>
-                    </div>
-                    <div class="row">
-                        <section class="col d-flex justify-content-center">
-                            <!-- row 3 -->
-                            <template x-for="opt in opts">
-                                <button class="m-3">
-                                    <img
-                                        :src="opt"
-                                        :alt="desc[opt]"
-                                        class="game-img"
-                                    />
+
+                    <!-- game 1 -->
+                    <section>
+                        <div class="row">
+                            <section class="col d-flex justify-content-center m-4">
+                                <!-- row 2 -->
+                                <span>
+                                    <h2
+                                        id="current-word"
+                                        class="d-inline"
+                                        x-text="currentWord"
+                                    ></h2>
+                                </span>
+                                <button id="btn-listen" class="btn game-btn">
+                                    <i class="bi bi-volume-up-fill"></i>
                                 </button>
-                            </template>
-                        </section>
-                    </div>
+                            </section>
+                        </div>
+                        <div class="row">
+                            <section class="col d-flex justify-content-center">
+                                <!-- row 3 -->
+                                <template x-for="opt in opts">
+                                    <button class="m-3">
+                                        <img
+                                            :src="opt"
+                                            :alt="desc[opt]"
+                                            class="game-img"
+                                        />
+                                    </button>
+                                </template>
+                            </section>
+                        </div>
+                    </section>
+                    <!-- game 2 -->
+                    <section></section>
+                    <!-- game 3 -->
+                    <section></section>
                 </section>
             </main>
         </section>
@@ -153,25 +161,30 @@
                             data-bs-dismiss="modal"
                             aria-label="Close"
                         >
+                        </button>
                     </div>
                     <div class="modal-body"><h3>!!Pjila'si!!</h3>
-                    <p>
-                        Mi'kmaq Picture Dictionary is a fun and interactive game to help
-                        you learn Mi'kmaq words. This game alternates between 'Multiple
-                        Choice Questions' and 'True or False'games for an interactive
-                        environment.
-                    </p>
-                    <p>
-                        Multiple Choice Question: Select the correct image out of three
-                        different images and match it to the Mi'kmaq word. Use the audio
-                        button to listen to the pronouniciation of the word and to
-                        record your own voice.
-                    </p>
-                    <p>
-                        True or False: A word and an image will be given to you; 
-                        You will have to answer whether the image matches the word 
-                        and determine if it's true or false.
-                    </p>
+                        <p>
+                            Mi'kmaq Picture Dictionary is a fun and interactive game to help
+                            you learn Mi'kmaq words. This game alternates between 'Multiple
+                            Choice Questions' and 'True or False'games for an interactive
+                            environment.
+                        </p>
+                        <p>
+                            Multiple Choice Question: Select the correct image out of three
+                            different images and match it to the Mi'kmaq word.
+                        </p>
+                        <p>
+                            True or False: A word and an image will be given to you; 
+                            You will have to answer whether the image matches the word 
+                            and determine if it's true or false.
+                        </p>
+                        <p>
+                            Pronouniciation: An image and an audio of the pronouniciation 
+                            of a word will be given to you. Use the audio button to 
+                            listen to the pronouniciation of the word and use the 
+                            microphone button to record your own voice.
+                        </p>
                     </div>                    
                     <div class="modal-footer">
                         
@@ -200,7 +213,21 @@
                             aria-label="Close"
                         >
                     </div>
-                    <div class="modal-body">sodfdsfdf</div>
+                    <div class="modal-body">
+                        <!-- word bank rows -->
+                        <template x-for="(word, i) in wordList">
+                            <div>
+                                <span x-text="word" class=""></span>
+                                <img :src="imageList[i]"/>
+                                <button 
+                                    class=""
+                                    @click="playAudio(audioList[i])"
+                                >
+                                    <i class="bi bi-mic-fill"></i>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
                     <div class="modal-footer">
                         
                     </div>
