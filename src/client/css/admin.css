@@ -1,0 +1,58 @@
+@import url("https://unpkg.com/mvp.css@1.12/mvp.css");
+
+:root {
+    --editor-preview-width: 40vw;
+    --editor-wordlist-width: calc(100vw - var(--editor-preview-width));
+}
+
+#username,
+#passphrase {
+    width: 90%;
+}
+
+#editor-body {
+    overflow: hidden;
+}
+
+#editor-header {
+    float: left;
+    width: 40vw;
+    height: 90vh;
+}
+
+#editor-list {
+    float: right;
+    width: 50vw;
+    height: 90vh;
+    overflow: auto;
+}
+
+#editor-header-img {
+    max-height: 200px;
+    max-width: 256px;
+}
+
+#editor-header-img ~ button {
+    display: block;
+}
+
+/* #editor-header > section > div {
+    display: block;
+} */
+
+.editor-list-item > button {
+    background-color: coral;
+    border-color: coral;
+    font-size: 12px;
+    padding: 4px;
+}
+
+.editor-li-img {
+    /* width: 40px; */
+    height: 40px;
+}
+
+label[for="word-img"],
+label[for="word-audio"] {
+    color: crimson;
+}

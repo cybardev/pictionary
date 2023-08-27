@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Word Updater</title>
+        <link rel="stylesheet" href="../src/client/css/admin.css" />
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+    </head>
+    <body x-data="editorData" id="editor-body">
+        <header id="editor-header">
+            <section>
+                <div>
+                    <img
+                        :src="currentWordImage ? currentWordImage : `../assets/server/images/${currentWord}.jpg`"
+                        :alt="currentWord"
+                        id="editor-header-img"
+                    />
+                    <div>
+                        <label for="word-img">Upload Image:</label>
+                        <input
+                            type="file"
+                            id="word-img"
+                            name="word-img"
+                            accept=".jpg"
+                            @change="updateImagePreview"
+                        />
+                    </div>
+                    <h1 contenteditable="true" x-text="currentWord"></h1>
+                    <p>(click the word above to edit)</p>
+                </div>
+                <div>
+                    <audio
+                        controls
+                        :src="currentWordAudio ? currentWordAudio : `../assets/server/audio/${currentWord}.wav`"
+                    >
+                        <a
+                            :href="`../assets/server/audio/${currentWord}.wav`"
+                        ></a>
+                    </audio>
+                    <div>
+                        <label for="word-audio">Upload Audio:</label>
+
+                        <input
+                            type="file"
+                            id="word-audio"
+                            name="word-audio"
+                            accept="audio/wav"
+                            @change="updateAudioPreview"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <button type="button" @click="cancelChanges">Cancel</button>
+                    <button type="button" @click="saveChanges">Save</button>
+                    <button type="button" @click="addNewWord">
+                        Add New Word
+                    </button>
+                </div>
+            </section>
+        </header>
+        <fieldset id="editor-list">
+            <legend><h2>Word List</h2></legend>
+            <template x-for="(word, index) in wordList">
+                <div class="editor-list-item">
+                    <input
+                        type="radio"
+                        :id="word"
+                        name="wordSelector"
+                        :value="word"
+                        x-model="currentWord"
+                        x-effect="index == 0 ? currentWord = word : null"
+                    />
+                    <label :for="word">
+                        <img
+                            :src="`../assets/server/images/${word}.jpg`"
+                            :alt="word"
+                            class="editor-li-img"
+                        />&nbsp;<span x-text="word"></span>
+                    </label>
+                    <button type="button" @click="deleteConfirm(word, index)">
+                        X
+                    </button>
+                </div>
+            </template>
+        </fieldset>
+        <script src="../src/client/js/admin.js"></script>
+    </body>
+</html>
