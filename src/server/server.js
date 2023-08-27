@@ -25,7 +25,7 @@ const upload = require("express-fileupload");
 const server = express();
 
 //port number
-const port = 40608;
+const port = 48622;
 
 //creates constants for file paths
 const AUDIO_PATH = "assets/server/audio",
@@ -107,7 +107,7 @@ server.get("/getWordBank", function (req, res) {
     wordbank = { vocab: words, images: images, audios: audios };
 
     //send object to js file
-    return res.status(200).send(wordbank);
+    return res.status(200).send(words);
 });
 
 /**

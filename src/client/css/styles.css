@@ -18,13 +18,14 @@
 #current-word {
     background-image: url("/assets/client/plank.png");
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100% 250px;
     padding: 80px 100px;
     text-align: center;
     font-size: 90px;
     font-family: "Comic Neue", sans-serif;
     font-weight: 500;
 }
+
 body {
     background-image: url("/assets/client/bg.png");
     background-repeat: no-repeat;
@@ -92,10 +93,38 @@ h1 {
     width: 350px;
 }
 
-.modal-dialog {
+/* .modal-dialog {
     overflow-y: initial;
 }
 .modal-body {
     height: 250px;
     overflow-y: auto;
+} */
+.preview-img {
+    height: 90px;
+    margin-right: 6px;
 }
+.preview-word {
+    margin-block: 8px;
+    font-size: 40px;
+    font-family: "Comic Neue", sans-serif;
+}
+
+.word-bank-btn {
+    color: rgb(211, 116, 79);
+    font-size: 40px;
+    /* -webkit-text-stroke-width: 4px; */
+}
+
+.word-bank-btn:hover {
+    color: rgb(230, 168, 55);
+    /* -webkit-text-stroke: 2px rgb(230, 168, 55); */
+}
+
+.word-bank-btn:active {
+    color: rgb(211, 116, 79) !important;
+}
+
+/* .preview-modal {
+    height: 500px;
+} */
