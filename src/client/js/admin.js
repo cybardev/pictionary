@@ -88,14 +88,12 @@ const editorData = {
                     dangerMode: true,
                 }).then((willDelete) => {
                     if (willDelete) {
-                        this.deleteWord(index);
+                        // delete 1 word from given index (currently selected)
+                        this.wordList.splice(index, 1);
                     }
                 });
             }
         });
-    },
-    deleteWord(index) {
-        this.wordList.splice(index, 1);
     },
     updateImagePreview(event) {
         this.currentWordImage = URL.createObjectURL(event.target.files[0]);
