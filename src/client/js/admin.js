@@ -66,12 +66,43 @@ const editorData = {
     ],
 
     // methods
-    inWordList(word) {
-        return this.wordList.includes(word);
+    cancelChanges(event) {
+        swal({
+            title: "Cancel all changes to word?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willCancel) => {
+            if (willCancel) {
+                // TODO: restore changes
+            }
+        });
     },
-    cancelChanges(event) {},
-    saveChanges(event) {},
-    addNewWord(event) {},
+    saveChanges(event) {
+        swal({
+            title: "Save all changes to word?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willSave) => {
+            if (willSave) {
+                // TODO: save word to list, image and audio to filesystem
+            }
+        });
+    },
+    addNewWord(event) {
+        let newWord = $_("h1").innerText;
+        if (this.wordList.includes(newWord)) {
+            swal({
+                title: `"${newWord}" already exists in Word List.`,
+                icon: "warning",
+            });
+        } else {
+            // TODO: add word to wordlist and save image and audio
+            this.wordList.push(newWord);
+            this.wordList.sort();
+        }
+    },
     deleteConfirm(word, index) {
         // double-check if user wants to remove word from list
         swal({
