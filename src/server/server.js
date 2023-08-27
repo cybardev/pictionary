@@ -32,7 +32,9 @@ const AUDIO_PATH = "assets/server/audio",
     IMG_PATH = "assets/server/images";
 
 // admin authentication passphrase
-const PASSWORD = "only me";
+const USERS = {
+    Teacher: "only me",
+};
 
 //variables for temporary holding of things being retrieved from server
 var audios = [],
@@ -68,8 +70,20 @@ server.use(upload());
  *
  * Author: Sheikh Saad Abdullah
  */
-server.get("/authenticate", (req, res) => {
-    return res.status(200).send(req.data === PASSWORD);
+let authenticated = false; // session authentication
+server.post("/authenticate", (req, res) => {
+    authenticated = req.passphrase === USERS[req.username];
+    return res.status(authenticated ? 200 : 403);
+});
+
+/**
+ * Logs out user when page is not visible
+ *
+ * Author: Sheikh Saad Abdullah
+ */
+server.post("/logoff", (req, res) => {
+    authenticated = false;
+    return res.status(!authenticated ? 200 : 500);
 });
 
 /**
