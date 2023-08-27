@@ -5,30 +5,44 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Pictionary Admin</title>
-        <!-- <link rel="stylesheet" href="../src/client/css/styles.css" /> -->
-        <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/tippy.js@6/animations/scale.css"
+        />
+        <link rel="stylesheet" href="../src/client/css/admin.css" />
         <script
             defer
             src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
         ></script>
     </head>
-    <body x-data="alpineData">
+    <body>
         <header>
             <h1>Admin Dashboard</h1>
         </header>
         <main>
-            <section>
-                <form @submit.prevent="authenticate()">
+            <section x-data="adminData">
+                <form
+                    @submit.prevent="authenticate(
+                        $refs.username.value,
+                        $refs.passphrase.value
+                    )"
+                >
                     <header>
                         <h2>Authentication Request</h2>
                     </header>
                     <label for="username">Username:</label>
-                    <input type="text" name="username" id="username" />
+                    <input
+                        type="text"
+                        name="username"
+                        id="username"
+                        x-ref="username"
+                    />
                     <label for="passphrase">Passphrase:</label>
                     <input
                         :type="showPass ? 'text' : 'password'"
                         name="passphrase"
                         id="passphrase"
+                        x-ref="passphrase"
                     />
                     <div>
                         <input
@@ -40,6 +54,8 @@
                 </form>
             </section>
         </main>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
         <script src="../src/client/js/admin.js"></script>
     </body>
 </html>
