@@ -36,13 +36,10 @@
     display: block;
 }
 
-/* #editor-header > section > div {
-    display: block;
-} */
-
 .editor-list-item > button {
-    background-color: coral;
-    border-color: coral;
+    --bg-color: coral;
+    background-color: var(--bg-color);
+    border-color: var(--bg-color);
     font-size: 12px;
     padding: 4px;
 }
