@@ -36,6 +36,18 @@
     display: block;
 }
 
+#editor-header > section {
+    flex-direction: column;
+}
+
+#editor-header > section > hr {
+    margin-block: 30px;
+}
+
+#editor-header > section > div > div > input {
+    margin-inline: auto;
+}
+
 .editor-list-item > button {
     --bg-color: crimson;
     background-color: var(--bg-color);
@@ -45,7 +57,6 @@
 }
 
 .editor-li-img {
-    /* width: 40px; */
     height: 40px;
 }
 

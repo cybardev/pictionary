@@ -37,7 +37,7 @@
                         id="username"
                         x-ref="username"
                     />
-                    <label for="passphrase">Passphrase:</label>
+                    <label for="passphrase">Password:</label>
                     <input
                         :type="showPass ? 'text' : 'password'"
                         name="passphrase"
@@ -48,7 +48,7 @@
                         <input
                             type="checkbox"
                             @click="showPass = !showPass"
-                        />&nbsp;Show Passphrase
+                        />&nbsp;Show Password
                     </div>
                     <button type="submit" id="submit">Login</button>
                 </form>

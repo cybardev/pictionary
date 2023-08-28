@@ -33,7 +33,7 @@ const AUDIO_PATH = "assets/server/audio",
 
 // admin authentication passphrase
 const USERS = {
-    Teacher: "only me",
+    teacher: "teacher",
 };
 
 //variables for temporary holding of things being retrieved from server

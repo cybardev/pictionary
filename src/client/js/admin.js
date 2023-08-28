@@ -67,6 +67,24 @@ const editorData = {
     ],
 
     // methods
+    fetchWordList() {
+        fetch(SERVER_URL + "/wordlist")
+            .then((res) => res.json())
+            .then((res) => {
+                if (res.ok) {
+                    console.log(res.wordList);
+                    this.wordList = res.wordList;
+                }
+            });
+    },
+    audiosrc(word) {
+        return `../assets/server/audio/${word}.wav`;
+    },
+    imgsrc(word) {
+        return word === "newWord"
+            ? "https://placehold.co/350x350/424242/424242"
+            : `../assets/server/images/${word}.jpg`;
+    },
     updateImagePreview(event) {
         this.currentWordImage = URL.createObjectURL(event.target.files[0]);
     },
@@ -90,29 +108,66 @@ const editorData = {
         });
     },
     saveChanges(event) {
-        swal({
-            title: "Save all changes to word?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willSave) => {
-            if (willSave) {
-                let wordAudio = $_("#word-audio").files[0];
-                let wordImage = $_("#word-image").files[0];
+        let updatedWord = $_("h1").innerText;
 
-                // TODO: handle case when no new file is chosen
+        if (updatedWord === "") {
+            swal({
+                title: "Please enter a word.",
+                icon: "warning",
+            });
+        } else {
+            swal({
+                title: "Save all changes to word?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willSave) => {
+                if (willSave) {
+                    let oldWord = null;
 
-                this.currentWord = $_("h1").innerText;
-                this.uploadFiles({
-                    audioFile: new File(wordAudio, `${this.currentWord}.wav`, {
-                        type: "audio/wav",
-                    }),
-                    imageFile: new File(wordImage, `${this.currentWord}.jpg`, {
-                        type: "image/jpg",
-                    }),
-                });
-            }
-        });
+                    let wordAudio = $_("#word-audio").files[0];
+                    let wordImage = $_("#word-image").files[0];
+
+                    if (!wordAudio) {
+                        wordAudio = fetch(this.audiosrc(this.currentWord)).then(
+                            async (res) => await res.blob()
+                        );
+                    }
+                    if (!wordImage) {
+                        wordImage = fetch(this.imgsrc(this.currentWord)).then(
+                            async (res) => await res.blob()
+                        );
+                    }
+                    if (this.currentWord !== updatedWord) {
+                        oldWord = this.currentWord;
+                        this.currentWord = updatedWord;
+                    }
+
+                    this.uploadFiles({
+                        audioFile: new File(
+                            wordAudio,
+                            `${this.currentWord}.wav`,
+                            {
+                                type: "audio/wav",
+                            }
+                        ),
+                        imageFile: new File(
+                            wordImage,
+                            `${this.currentWord}.jpg`,
+                            {
+                                type: "image/jpg",
+                            }
+                        ),
+                    });
+
+                    if (oldWord) {
+                        deleteWord(oldWord);
+                    }
+
+                    this.fetchWordList();
+                }
+            });
+        }
     },
     deleteConfirm(word, index) {
         // double-check if user wants to remove word from list
@@ -131,19 +186,10 @@ const editorData = {
                 }).then((willDelete) => {
                     if (willDelete) {
                         // delete 1 word from given index (currently selected)
-                        let deletedWord = this.wordList.splice(index, 1)[0];
+                        let wordToDelete = this.wordList.splice(index, 1)[0];
                         this.currentWord = this.wordList[0];
-                        fetch(SERVER_URL + "/delete", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({ word: deletedWord }),
-                        }).then((res) => {
-                            if (res.ok) {
-                                console.log("Word has been deleted.");
-                            }
-                        });
+                        deleteWord(wordToDelete);
+                        this.fetchWordList();
                     }
                 });
             }
@@ -159,6 +205,19 @@ const editorData = {
         }).then((res) => {
             if (res.ok) {
                 console.log("Files have been uploaded.");
+            }
+        });
+    },
+    deleteWord(wordToDelete) {
+        fetch(SERVER_URL + "/delete", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ word: wordToDelete }),
+        }).then((res) => {
+            if (res.ok) {
+                console.log("Word has been deleted.");
             }
         });
     },

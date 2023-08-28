@@ -15,24 +15,10 @@
         <header id="editor-header">
             <section>
                 <div>
-                    <img
-                        :src="currentWordImage ? currentWordImage : `../assets/server/images/${currentWord}.jpg`"
-                        :alt="currentWord"
-                        id="editor-header-img"
-                    />
-                    <div>
-                        <label for="word-image">Upload Image:</label>
-                        <input
-                            type="file"
-                            id="word-image"
-                            name="imageFile"
-                            accept=".jpg"
-                            @change="updateImagePreview"
-                        />
-                    </div>
                     <h1 contenteditable="true" x-text="currentWord"></h1>
                     <p>(click the word above to edit)</p>
                 </div>
+                <hr />
                 <div>
                     <audio
                         controls
@@ -43,7 +29,7 @@
                         ></a>
                     </audio>
                     <div>
-                        <label for="word-audio">Upload Audio:</label>
+                        <label for="word-audio">Upload Audio (wav only):</label>
 
                         <input
                             type="file"
@@ -54,6 +40,25 @@
                         />
                     </div>
                 </div>
+                <hr />
+                <div>
+                    <img
+                        :src="currentWordImage ? currentWordImage : imgsrc(currentWord)"
+                        :alt="currentWord"
+                        id="editor-header-img"
+                    />
+                    <div>
+                        <label for="word-image">Upload Image (jpg only):</label>
+                        <input
+                            type="file"
+                            id="word-image"
+                            name="imageFile"
+                            accept=".jpg"
+                            @change="updateImagePreview"
+                        />
+                    </div>
+                </div>
+                <hr />
                 <div>
                     <button type="button" @click="cancelChanges">Cancel</button>
                     <button type="button" @click="saveChanges">Save</button>
@@ -73,11 +78,11 @@
                         name="wordSelector"
                         :value="word"
                         x-model="currentWord"
-                        x-effect="index == 0 ? currentWord = word : null"
+                        x-effect="index === 0 ? currentWord = word : null"
                     />
                     <label :for="word">
                         <img
-                            :src="`../assets/server/images/${word}.jpg`"
+                            :src="imgsrc(word)"
                             :alt="word"
                             class="editor-li-img"
                         />&nbsp;<span x-text="word"></span>
