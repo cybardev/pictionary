@@ -171,14 +171,16 @@ server.post("/delete", (req, res) => {
         }
     });
 
-    // delete image file
-    fs.unlink(`../../${IMAGE_PATH}/${req.word}.jpg`, (err) => {
-        if (err) {
-            res.send(err);
-        } else {
-            console.log(`Deleted ${req.word}.jpg`);
-        }
-    });
+    // delete image file except if it's the placeholder image
+    if (req.word != "newWord") {
+        fs.unlink(`../../${IMAGE_PATH}/${req.word}.jpg`, (err) => {
+            if (err) {
+                res.send(err);
+            } else {
+                console.log(`Deleted ${req.word}.jpg`);
+            }
+        });
+    }
 });
 
 /**
