@@ -36,12 +36,6 @@ const USERS = {
     teacher: "teacher",
 };
 
-//variables for temporary holding of things being retrieved from server
-var audios = [],
-    images = [],
-    words = [],
-    wordbank = {};
-
 // set JSON recognition
 server.use(express.json());
 
@@ -65,10 +59,23 @@ let allowCrossDomain = function (req, res, next) {
 server.use(allowCrossDomain);
 server.use(upload());
 
+/**
+ * Log a received request to the console
+ *
+ * @param {string} reqType type of request (GET, POST)
+ * @param {string} url endpoint at which request was received
+ */
 function reqLogger(reqType, url) {
     console.log(`${reqType} request at ${url}`);
 }
 
+/**
+ * Move a file in the filesystem to a given location
+ *
+ * @param {File} file file object to move in filesystem
+ * @param {string} targetPath location to move file to
+ * @returns {boolean} success status
+ */
 function moveFile(file, targetPath) {
     let error = null;
 
@@ -159,6 +166,11 @@ server.post("/upload", (req, res) => {
     }
 });
 
+/**
+ * Handle requests to delete file
+ *
+ * @author Sheikh Saad Abdullah
+ */
 server.post("/delete", (req, res) => {
     reqLogger("POST", req.url);
 
