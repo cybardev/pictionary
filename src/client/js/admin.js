@@ -7,7 +7,7 @@
  */
 
 //creates conection to server url
-const SERVER_URL = "https://140.184.230.209:40608";
+const SERVER_URL = "http://140.184.230.209:40608";
 
 // JQuery-like shorthand for referencing DOM objects
 const $_ = (el) => document.querySelector(el);
@@ -26,8 +26,9 @@ document.addEventListener("visibilitychange", () => {
 // data required for the admin page
 const adminData = {
     showPass: false,
-    async authenticate(username, passphrase) {
-        await fetch(SERVER_URL + "/authenticate", {
+    authenticate(username, passphrase) {
+        // TODO: use JQuery AJAX
+        fetch(SERVER_URL + "/authenticate", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -54,28 +55,13 @@ const editorData = {
     currentWord: "",
     currentWordImage: "",
     currentWordAudio: "",
-    wordList: [
-        "aqq",
-        "eliey",
-        "kesalk",
-        "ki'l",
-        "l'tu",
-        "mijisi",
-        "ni'n",
-        "teluisi",
-        "wiktm",
-    ],
+    wordList: [],
 
     // methods
     fetchWordList() {
-        fetch(SERVER_URL + "/wordlist")
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.ok) {
-                    console.log(res.wordList);
-                    this.wordList = res.wordList;
-                }
-            });
+        $.get(SERVER_URL + "/wordlist", (res) => {
+            this.wordList = res.wordList;
+        }).fail((err) => console.error(err.responseText));
     },
     audiosrc(word) {
         return `../assets/server/audio/${word}.wav`;
@@ -129,11 +115,13 @@ const editorData = {
                     let wordImage = $_("#word-image").files[0];
 
                     if (!wordAudio) {
+                        // TODO: use JQuery AJAX
                         wordAudio = fetch(this.audiosrc(this.currentWord)).then(
                             async (res) => await res.blob()
                         );
                     }
                     if (!wordImage) {
+                        // TODO: use JQuery AJAX
                         wordImage = fetch(this.imgsrc(this.currentWord)).then(
                             async (res) => await res.blob()
                         );
@@ -196,6 +184,7 @@ const editorData = {
         });
     },
     uploadFiles(filesObj) {
+        // TODO: use JQuery AJAX
         fetch(SERVER_URL + "/upload", {
             method: "POST",
             headers: {
@@ -209,6 +198,7 @@ const editorData = {
         });
     },
     deleteWord(wordToDelete) {
+        // TODO: use JQuery AJAX
         fetch(SERVER_URL + "/delete", {
             method: "POST",
             headers: {
