@@ -128,12 +128,12 @@ const editorData = {
                     icon: "error",
                     buttons: true,
                     dangerMode: true,
-                }).then(async (willDelete) => {
+                }).then((willDelete) => {
                     if (willDelete) {
                         // delete 1 word from given index (currently selected)
                         let deletedWord = this.wordList.splice(index, 1)[0];
                         this.currentWord = this.wordList[0];
-                        await fetch(SERVER_URL + "/delete", {
+                        fetch(SERVER_URL + "/delete", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
@@ -149,7 +149,17 @@ const editorData = {
             }
         });
     },
-    uploadFiles(files) {
-        // TODO: send files to server
+    uploadFiles(filesObj) {
+        fetch(SERVER_URL + "/upload", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ files: filesObj }),
+        }).then((res) => {
+            if (res.ok) {
+                console.log("Files have been uploaded.");
+            }
+        });
     },
 };
