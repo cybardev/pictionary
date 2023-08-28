@@ -29,7 +29,7 @@ const port = 40608;
 
 //creates constants for file paths
 const AUDIO_PATH = "assets/server/audio",
-    IMG_PATH = "assets/server/images";
+    IMAGE_PATH = "assets/server/images";
 
 // admin authentication passphrase
 const USERS = {
@@ -65,6 +65,22 @@ let allowCrossDomain = function (req, res, next) {
 server.use(allowCrossDomain);
 server.use(upload());
 
+function reqLogger(reqType, url) {
+    console.log(`${reqType} request at ${url}`);
+}
+
+function moveFile(file, targetPath) {
+    let error = null;
+
+    file.mv(targetPath, (err) => {
+        error = err;
+    });
+
+    // the only time loosely-typed equality checking is excusable:
+    // checking if something is undefined
+    return error == null;
+}
+
 /**
  * Purpose: Authenticates password so teachers can access admin page
  *
@@ -72,6 +88,8 @@ server.use(upload());
  */
 let authenticated = false; // session authentication
 server.post("/authenticate", (req, res) => {
+    reqLogger("POST", req.url);
+
     authenticated = req.passphrase === USERS[req.username];
     return res.status(authenticated ? 200 : 403);
 });
@@ -82,6 +100,8 @@ server.post("/authenticate", (req, res) => {
  * Author: Sheikh Saad Abdullah
  */
 server.post("/logoff", (req, res) => {
+    reqLogger("POST", req.url);
+
     authenticated = false;
     return res.status(!authenticated ? 200 : 500);
 });
@@ -93,35 +113,19 @@ server.post("/logoff", (req, res) => {
  * Author: Sarah Derby
  *         Sheikh Saad Abdullah
  */
-server.get("/getWordBank", function (req, res) {
-    console.log(req.url);
+server.get("/wordlist", (req, res) => {
+    reqLogger("GET", req.url);
 
-    //loops all files in AUDIO_PATH and saves directories to array
-    audios = fs
+    // save words to array
+    let words = fs
         .readdirSync(path.resolve(__dirname, "../../" + AUDIO_PATH))
-        .map((wav) => {
-            return AUDIO_PATH + "/" + path.basename(wav);
+        .map((word) => {
+            // remove file extension
+            return path.basename(word, path.extname(word));
         });
-
-    //loops all files in IMG_PATH and saves directories to array
-    images = fs
-        .readdirSync(path.resolve(__dirname, "../../" + IMG_PATH))
-        .map((img) => {
-            return IMG_PATH + "/" + path.basename(img);
-        });
-
-    //remove file extension to gain just vocab name and save all to an array
-    words = fs
-        .readdirSync(path.resolve(__dirname, "../../" + IMG_PATH))
-        .map((vocab) => {
-            return path.basename(vocab, path.extname(vocab));
-        });
-
-    //save arrays to object for easy sharing to client side
-    wordbank = { vocab: words, images: images, audios: audios };
 
     //send object to js file
-    return res.status(200).send(wordbank);
+    return res.status(200).send({ wordList: words });
 });
 
 /**
@@ -130,41 +134,51 @@ server.get("/getWordBank", function (req, res) {
  * Author: Ishani Kasaju
  *         Sheikh Saad Abdullah
  */
-server.post("/upload/", (req, res) => {
-    console.log(req.url);
+server.post("/upload", (req, res) => {
+    reqLogger("POST", req.url);
 
     //check that files exist
     if (req.files) {
-        //add files to variables and save names
-        var reqImgFile = req.files.imgFile;
-        var imgFileName = reqImgFile.name;
+        //add files to variables
+        let imageFile = req.files.imageFile;
+        let audioFile = req.files.audioFile;
 
-        var reqAudFile = req.files.audFile;
-        var audFileName = reqAudFile.name;
-
-        console.log(imgFileName);
-        console.log(audFileName);
+        console.log(imageFile.name);
+        console.log(audioFile.name);
 
         //move files to new loaction in server
-        reqImgFile.mv("../../" + IMG_PATH + "/" + imgFileName, function (err) {
-            if (err) {
-                res.send(err);
+        if (moveFile(imageFile, `../../${IMAGE_PATH}/${imageFile.name}`)) {
+            if (moveFile(audioFile, `../../${AUDIO_PATH}/${audioFile.name}`)) {
+                res.send("Uploaded Audio and Image Files.");
             } else {
-                reqImgFile.mv(
-                    "../../" + AUDIO_PATH + "/" + audFileName,
-                    function (err) {
-                        if (err) {
-                            res.send(err);
-                        } else {
-                            res.send(
-                                "Your files have been added to the server and you may now go back to the previous screen, thank you,!"
-                            );
-                        }
-                    }
-                );
+                res.send("Could not upload Audio File.");
             }
-        });
+        } else {
+            res.send("Could not upload Image File.");
+        }
     }
+});
+
+server.post("/delete", (req, res) => {
+    reqLogger("POST", req.url);
+
+    // delete audio file
+    fs.unlink(`../../${AUDIO_PATH}/${req.word}.wav`, (err) => {
+        if (err) {
+            res.send(err);
+        } else {
+            console.log(`Deleted ${req.word}.wav`);
+        }
+    });
+
+    // delete image file
+    fs.unlink(`../../${IMAGE_PATH}/${req.word}.jpg`, (err) => {
+        if (err) {
+            res.send(err);
+        } else {
+            console.log(`Deleted ${req.word}.jpg`);
+        }
+    });
 });
 
 /**
