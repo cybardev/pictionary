@@ -22,8 +22,10 @@
     padding: 80px 100px;
     text-align: center;
     font-size: 90px;
-    font-family: "Comic Neue", sans-serif;
     font-weight: 500;
+}
+#instructions-modal {
+    font-size: 25px;
 }
 
 body {
@@ -32,10 +34,10 @@ body {
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
+    font-family: "Comic Neue", sans-serif;
 }
 
 h1 {
-    font-family: "Comic Neue", sans-serif;
     color: rgb(223, 136, 176);
     font-size: 130px;
     font-weight: 900;
@@ -49,13 +51,11 @@ h1 {
 }
 
 .sub-title {
-    font-family: "Comic Neue", sans-serif;
     color: rgb(223, 136, 176);
     font-size: 40px;
 }
 
 .menu-btn {
-    font-family: "Comic Neue", sans-serif;
     font-size: 70px;
     font-weight: 900;
     letter-spacing: 5px;
@@ -107,7 +107,6 @@ h1 {
 .preview-word {
     margin-block: 8px;
     font-size: 40px;
-    font-family: "Comic Neue", sans-serif;
 }
 
 .word-bank-btn {
