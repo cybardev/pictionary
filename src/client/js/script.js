@@ -3,77 +3,62 @@ document.addEventListener("alpine:init", () => {
 });
 
 //creates conection to server url
-const SERVER_URL = "http://127.0.0.1:48622";
-
-// let wordList = new Array();
-// let imageList = new Array();
-// let audioList = new Array();
-
-// const myRequest = new Request(`${SERVER_URL}/getWordBank`);
-
-// fetch(myRequest)
-//   .then((response) => {
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-
-//     return response.json();
-//   })
-//   .then((response) => {
-//     const {vocab, images, audios} = response;
-//     wordList = vocab;
-//     imageList = images;
-//     audioList = audios;
-//     console.log(vocab);
-//   });
-// console.log(audioList);
+const SERVER_URL = "http://127.0.0.1:40608";
 
 const globalData = {
+
     // attributes
+
     atMenu: true,
     gameStarted: false,
-    currentWord: "test",
+    currentWord: "",
     opts: [],
-    wordList: [
-        "aqq",
-        "eliey",
-        "kesalk",
-        "ki'l",
-        "l'tu",
-        "mijisi",
-        "ni'n",
-        "teluisi",
-        "wiktm",
-    ],
+    wordList: [],
     correctList: [],    
+
     // function
+
+    /**
+     * 
+     * @param {*} url 
+     */
     playAudio(url) {
         new Audio(url).play();
     },
+    /**
+     * 
+     */
     startGame() {
         this.gameStarted = true;
         this.gameLoop();
     },
+    /**
+     * 
+     */
     endGame() {
         this.correctList = [];
         this.gameStarted = false;
     },
+    /**
+     * 
+     */
     getWordBank() {
-        // const response = await fetch();
-        // const {vocab} = await response.json();
-        // vocab.forEach(word => {
-        //     this.wordList.push(word);
-        // });
-        fetch(`${SERVER_URL}/getWordBank`)
-            .then((res) => res.json())
-            .then((data) => {
-                this.wordList = [...data];
-            })
-            .catch((err) => console.log(err));
+        $.get(SERVER_URL + "/wordlist", (res) => {
+            this.wordList = res.wordList;
+        }).fail((err) => {
+            console.log(err);
+        }); 
     },
+    /**
+     * 
+     * @returns 
+     */
     getRandomWord() {
         return this.wordList[Math.floor(Math.random() * this.wordList.length)];
     },
+    /**
+     * 
+     */
     resetCurrentWord() {
         let word = this.getRandomWord();
         while (this.correctList.includes(word)) {
@@ -81,7 +66,10 @@ const globalData = {
         }
         this.currentWord = word;
     },
-    setGameChoice() {
+    /**
+     * 
+     */
+    setGameMultiChoice() {
         this.opts[0] = this.currentWord;
 
         let word = this.getRandomWord();
@@ -93,6 +81,9 @@ const globalData = {
         }
         this.opts.sort(() => Math.random() - 0.5);
     },
+    /**
+     * 
+     */
     evaluateResponse(selection) {
         if(selection == this.currentWord){
             swal({
@@ -110,29 +101,16 @@ const globalData = {
             });
         }
         this.gameLoop();
-    }
-    ,
+    },
+    /**
+     * 
+     */
     gameLoop() {
         if (this.gameStarted && this.correctList.length != this.wordList.length) {
             this.resetCurrentWord();
-            this.setGameChoice();
+            this.setGameMultiChoice();
         } else {
             this.endGame();
         }
     },
 };
-
-document.querySelector("#start-page").addEventListener("load", (e) => {
-    globalData.getWordBank();
-});
-
-//gameloop() while gameStarted is true & correctList != wordList
-//getNewWord()
-//
-//
-//setGameChoice(currentWord) populate opts list randomly, set correct index 1-3
-//setGameTF(currentWord) choose word or random word, set correct index 1-2
-//setGameSpeak(currentWord) set correct index to -1
-//
-//evaluateResponse() check correct index with clicked, congratz, update correct response list of wins
-//
