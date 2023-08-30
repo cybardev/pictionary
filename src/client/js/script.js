@@ -3,10 +3,9 @@ document.addEventListener("alpine:init", () => {
 });
 
 //creates conection to server url
-const SERVER_URL = "http://127.0.0.1:40608";
+const SERVER_URL = "http://140.184.230.209:40608";
 
 const globalData = {
-
     // attributes
 
     atMenu: true,
@@ -14,7 +13,7 @@ const globalData = {
     currentWord: "",
     wordOptions: [],
     wordList: [],
-    correctList: [],    
+    correctList: [],
 
     // functions
 
@@ -54,7 +53,7 @@ const globalData = {
             this.wordList = res.wordList;
         }).fail((err) => {
             console.log(err);
-        }); 
+        });
     },
     /**
      * get random word from wordList
@@ -83,8 +82,11 @@ const globalData = {
         this.wordOptions[0] = this.currentWord;
 
         let word = this.getRandomWord();
-        for(let i = 1; i <= 2; i++){
-            while(word == this.currentWord || word == this.wordOptions[i-1]){
+        for (let i = 1; i <= 2; i++) {
+            while (
+                word == this.currentWord ||
+                word == this.wordOptions[i - 1]
+            ) {
                 word = this.getRandomWord();
             }
             this.wordOptions[i] = word;
@@ -97,7 +99,7 @@ const globalData = {
      * @param {string} selection selected word
      */
     evaluateResponse(selection) {
-        if(selection == this.currentWord){
+        if (selection == this.currentWord) {
             swal({
                 title: "kelu'lk tela'tekn",
                 text: `Correct picture for ${this.currentWord}`,
@@ -119,7 +121,10 @@ const globalData = {
      * @author Naziya Tasnim
      */
     gameSetup() {
-        if (this.gameStarted && this.correctList.length != this.wordList.length) {
+        if (
+            this.gameStarted &&
+            this.correctList.length != this.wordList.length
+        ) {
             this.resetCurrentWord();
             this.setGameMultiChoice();
         } else {

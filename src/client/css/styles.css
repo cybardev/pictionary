@@ -16,7 +16,7 @@
     margin-block: 35vh;
 }
 #current-word {
-    background-image: url("/assets/client/plank.png");
+    background-image: url("../../../assets/client/plank.png");
     background-repeat: no-repeat;
     background-size: 100% 250px;
     padding: 80px 100px;
@@ -29,7 +29,7 @@
 }
 
 body {
-    background-image: url("/assets/client/bg.png");
+    background-image: url("../../../assets/client/bg.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
