@@ -27,6 +27,9 @@ const server = express();
 //port number
 const port = 40608;
 
+// public files
+server.use(express.static(__dirname + "../../src/client"));
+
 //creates constants for file paths
 const AUDIO_PATH = "assets/server/audio",
     IMAGE_PATH = "assets/server/images";
@@ -91,9 +94,9 @@ function saveFile(file, targetPath) {
 function moveFile(sourcePath, targetPath) {
     let status = "";
 
-    fs.readFileSync(sourcePath, (err, data) => {
-        fs.writeFileSync(targetPath, data, (err) => {
-            fs.unlinkSync(sourcePath, () => {
+    fs.readFile(sourcePath, (err, data) => {
+        fs.writeFile(targetPath, data, (err) => {
+            fs.unlink(sourcePath, () => {
                 status = err ? err : `File moved to ${targetPath}`;
             });
         });
@@ -120,24 +123,14 @@ function deleteMediaFile(media_name, media_path) {
  *
  * Author: Sheikh Saad Abdullah
  */
-let authenticated = false; // session authentication
 server.post("/authenticate", (req, res) => {
     reqLogger("POST", req.url);
 
-    authenticated = req.passphrase === USERS[req.username];
-    return res.status(authenticated ? 200 : 403);
-});
-
-/**
- * Logs out user when page is not visible
- *
- * Author: Sheikh Saad Abdullah
- */
-server.post("/logoff", (req, res) => {
-    reqLogger("POST", req.url);
-
-    authenticated = false;
-    return res.status(!authenticated ? 200 : 500);
+    if (req.body.passphrase === USERS[req.body.username]) {
+        return res.sendFile(path.resolve(__dirname, "../../admin/editor.html"));
+    } else {
+        return res.sendFile(path.resolve(__dirname, "../../admin/denied.html"));
+    }
 });
 
 /**
@@ -173,43 +166,57 @@ server.post("/upload", (req, res) => {
 
     // handle uploading of new word
     if (req.files) {
-        //add files to variables
-        let imageFile = req.files.imageFile;
-        let audioFile = req.files.audioFile;
-
-        console.log(imageFile.name);
-        console.log(audioFile.name);
-
-        //move files to new loaction in server
         if (
-            saveFile(imageFile, `../../${IMAGE_PATH}/${req.body.fileName}.jpg`)
+            req.body.fileName !== req.body.oldName &&
+            req.body.oldName !== "newWord"
         ) {
+            // TODO: handle case when existing word is updated and only one media file is uploaded
+        }
+
+        // save audio file if uploaded
+        if (req.files.audioFile) {
+            let audioFile = req.files.audioFile;
+            console.log(audioFile.name);
             if (
                 saveFile(
                     audioFile,
                     `../../${AUDIO_PATH}/${req.body.fileName}.wav`
                 )
             ) {
-                console.log("Uploaded Audio and Image Files.");
+                console.log(`Uploaded Audio File: ${req.body.fileName}.wav`);
             } else {
                 console.log("Could not upload Audio File.");
             }
-        } else {
-            console.log("Could not upload Image File.");
+        }
+
+        // save image file if uploaded
+        if (req.files.imageFile) {
+            let imageFile = req.files.imageFile;
+            console.log(imageFile.name);
+            if (
+                saveFile(
+                    imageFile,
+                    `../../${IMAGE_PATH}/${req.body.fileName}.jpg`
+                )
+            ) {
+                console.log(`Uploaded Image File: ${req.body.fileName}.jpg`);
+            } else {
+                console.log("Could not upload Image File.");
+            }
         }
     } else {
         // handle updating of existing word
         if (req.body.oldWord !== "newWord") {
             console.log(
                 moveFile(
-                    `../../${AUDIO_PATH}/${req.body.oldWord}.wav`,
-                    `../../${AUDIO_PATH}/${req.body.newWord}.wav`
+                    `../../${AUDIO_PATH}/${req.body.oldName}.wav`,
+                    `../../${AUDIO_PATH}/${req.body.fileName}.wav`
                 )
             );
             console.log(
                 moveFile(
-                    `../../${IMAGE_PATH}/${req.body.oldWord}.jpg`,
-                    `../../${IMAGE_PATH}/${req.body.newWord}.jpg`
+                    `../../${IMAGE_PATH}/${req.body.oldName}.jpg`,
+                    `../../${IMAGE_PATH}/${req.body.fileName}.jpg`
                 )
             );
         }
