@@ -43,11 +43,9 @@
                 <div>
                     <audio
                         controls
-                        :src="currentWordAudio ? currentWordAudio : `../assets/server/audio/${currentWord}.wav`"
+                        :src="currentWordAudio ? currentWordAudio : audiosrc(currentWord)"
                     >
-                        <a
-                            :href="`../assets/server/audio/${currentWord}.wav`"
-                        ></a>
+                        <a :href="audiosrc(currentWord)"></a>
                     </audio>
                     <div>
                         <label for="word-audio">Upload Audio (wav only):</label>

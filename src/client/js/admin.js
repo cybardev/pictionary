@@ -14,36 +14,9 @@ const $_ = (el) => document.querySelector(el);
 
 const errorCallback = (err) => console.error(err.responseText);
 
-/**
- * Logs out user when page is not visible
- *
- * Author: Sheikh Saad Abdullah
- */
-if ($_("body").getAttribute("id") !== "editor-body") {
-    document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "hidden") {
-            navigator.sendBeacon(SERVER_URL + "/logoff");
-        }
-    });
-}
-
 // data required for the admin page
 const adminData = {
     showPass: false,
-    authenticate(username, passphrase) {
-        $.post(
-            SERVER_URL + "/authenticate",
-            {
-                username: username,
-                passphrase: passphrase,
-            },
-            (res) => {
-                window.location.replace("../../../admin/editor.html");
-            }
-        ).fail(
-            Swal.fire("Incorrect username or passphrase.\nPlease try again.")
-        );
-    },
 };
 
 // data required for the editor page
@@ -118,7 +91,7 @@ const editorData = {
                         let wordToDelete = this.wordList.splice(index, 1)[0];
                         this.currentWord = this.wordList[0];
                         this.deleteWord(wordToDelete);
-                        this.fetchWordList();
+                        window.location.reload();
                     }
                 });
             }
