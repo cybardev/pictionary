@@ -15,17 +15,29 @@
 #game-page {
     margin-block: 35vh;
 }
+#current-word {
+    background-image: url("/assets/client/plank.png");
+    background-repeat: no-repeat;
+    background-size: 100% 250px;
+    padding: 80px 100px;
+    text-align: center;
+    font-size: 90px;
+    font-weight: 500;
+}
+#instructions-modal {
+    font-size: 25px;
+}
 
 body {
-    background-image: url("/assets/client/bg_lines.png");
+    background-image: url("/assets/client/bg.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     background-size: cover;
+    font-family: "Comic Neue", sans-serif;
 }
 
 h1 {
-    font-family: "Comic Neue", sans-serif;
     color: rgb(223, 136, 176);
     font-size: 130px;
     font-weight: 900;
@@ -39,13 +51,11 @@ h1 {
 }
 
 .sub-title {
-    font-family: "Comic Neue", sans-serif;
     color: rgb(223, 136, 176);
     font-size: 40px;
 }
 
 .menu-btn {
-    font-family: "Comic Neue", sans-serif;
     font-size: 70px;
     font-weight: 900;
     letter-spacing: 5px;
@@ -68,15 +78,52 @@ h1 {
     font-size: 100px;
     -webkit-text-stroke-width: 4px;
 }
-.game-img {
-    height: 400px;
-    width: 400px;
+
+.game-btn:hover {
+    color: rgb(230, 168, 55);
+    /* -webkit-text-stroke: 2px rgb(230, 168, 55); */
 }
 
-.modal-dialog {
+.game-btn:active {
+    color: rgb(211, 116, 79) !important;
+}
+
+.game-img {
+    height: 350px;
+    width: 350px;
+}
+
+/* .modal-dialog {
     overflow-y: initial;
 }
 .modal-body {
     height: 250px;
     overflow-y: auto;
+} */
+.preview-img {
+    height: 90px;
+    margin-right: 6px;
 }
+.preview-word {
+    margin-block: 8px;
+    font-size: 40px;
+}
+
+.word-bank-btn {
+    color: rgb(211, 116, 79);
+    font-size: 40px;
+    /* -webkit-text-stroke-width: 4px; */
+}
+
+.word-bank-btn:hover {
+    color: rgb(230, 168, 55);
+    /* -webkit-text-stroke: 2px rgb(230, 168, 55); */
+}
+
+.word-bank-btn:active {
+    color: rgb(211, 116, 79) !important;
+}
+
+/* .preview-modal {
+    height: 500px;
+} */
