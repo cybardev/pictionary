@@ -24,6 +24,8 @@
         ></script>
     </head>
     <body x-data="globalData" x-init="getWordBank">
+        <!-- Main Menu -->
+
         <section
             class="container flex-column"
             id="start-page"
@@ -35,7 +37,6 @@
                     <p class="sub-title">Mikwite'tmk+t Angie</p>
                 </header>
                 <main class="mt-4 row d-flex align-items-center">
-                    <!-- <| mb >=> menu-btn |> -->
                     <button
                         type="button"
                         class="btn menu-btn fw-bold"
@@ -65,6 +66,9 @@
                 </main>
             </div>
         </section>
+
+        <!-- Game Page -->
+
         <section
             id="game-page"
             class="container m-0"
@@ -75,6 +79,7 @@
                 <section class="col vw-100">
                     <div class="row">
                         <section class="col">
+                            <!-- Close Button -->
                             <button
                                 type="button"
                                 class="btn game-btn d-flex justify-content-start"
@@ -85,6 +90,7 @@
                             </button>
                         </section>
                         <section class="col-2">
+                            <!-- Instructions Button -->
                             <button
                                 type="button"
                                 class="btn game-btn"
@@ -94,6 +100,7 @@
                             >
                                 <i class="bi bi-question-lg"></i>
                             </button>
+                            <!-- Word Bank Button -->
                             <button
                                 type="button"
                                 class="btn game-btn"
@@ -112,12 +119,12 @@
                             <section
                                 class="col d-flex justify-content-center m-4"
                             >
-                                <!-- row 2 -->
                                 <h2
                                     id="current-word"
                                     class="d-inline"
                                     x-text="currentWord"
                                 ></h2>
+                                <!-- Audio Button -->
                                 <button
                                     id="btn-listen"
                                     class="btn game-btn"
@@ -129,8 +136,8 @@
                         </div>
                         <div class="row">
                             <section class="col d-flex justify-content-center">
-                                <!-- row 3 -->
-                                <template x-for="word in opts">
+                                <!-- Options Buttons -->
+                                <template x-for="word in wordOptions">
                                     <button
                                         class="m-3"
                                         @click="evaluateResponse(word)"

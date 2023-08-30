@@ -143,6 +143,7 @@ server.get("/wordlist", (req, res) => {
  */
 server.post("/upload", (req, res) => {
     reqLogger("POST", req.url);
+    console.log(req.body);
 
     //check that files exist
     if (req.files) {
@@ -154,14 +155,21 @@ server.post("/upload", (req, res) => {
         console.log(audioFile.name);
 
         //move files to new loaction in server
-        if (moveFile(imageFile, `../../${IMAGE_PATH}/${imageFile.name}`)) {
-            if (moveFile(audioFile, `../../${AUDIO_PATH}/${audioFile.name}`)) {
-                res.send("Uploaded Audio and Image Files.");
+        if (
+            moveFile(imageFile, `../../${IMAGE_PATH}/${req.body.fileName}.jpg`)
+        ) {
+            if (
+                moveFile(
+                    audioFile,
+                    `../../${AUDIO_PATH}/${req.body.fileName}.wav`
+                )
+            ) {
+                console.log("Uploaded Audio and Image Files.");
             } else {
-                res.send("Could not upload Audio File.");
+                console.log("Could not upload Audio File.");
             }
         } else {
-            res.send("Could not upload Image File.");
+            console.log("Could not upload Image File.");
         }
     }
 });
@@ -175,23 +183,33 @@ server.post("/delete", (req, res) => {
     reqLogger("POST", req.url);
 
     // delete audio file
-    fs.unlink(`../../${AUDIO_PATH}/${req.word}.wav`, (err) => {
-        if (err) {
-            res.send(err);
-        } else {
-            console.log(`Deleted ${req.word}.wav`);
-        }
-    });
-
-    // delete image file except if it's the placeholder image
-    if (req.word != "newWord") {
-        fs.unlink(`../../${IMAGE_PATH}/${req.word}.jpg`, (err) => {
+    fs.unlinkSync(
+        `${path.resolve(__dirname, "../../" + AUDIO_PATH)}/${
+            req.body.word
+        }.wav`,
+        (err) => {
             if (err) {
                 res.send(err);
             } else {
-                console.log(`Deleted ${req.word}.jpg`);
+                console.log(`Deleted ${req.body.word}.wav`);
             }
-        });
+        }
+    );
+
+    // delete image file except if it's the placeholder image
+    if (req.body.word != "newWord") {
+        fs.unlinkSync(
+            `${path.resolve(__dirname, "../../" + IMAGE_PATH)}/${
+                req.body.word
+            }.jpg`,
+            (err) => {
+                if (err) {
+                    res.send(err);
+                } else {
+                    console.log(`Deleted ${req.body.word}.jpg`);
+                }
+            }
+        );
     }
 });
 
