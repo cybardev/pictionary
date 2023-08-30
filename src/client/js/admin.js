@@ -90,70 +90,6 @@ const editorData = {
             }
         });
     },
-    saveChanges(event) {
-        let updatedWord = $_("#word-text").value;
-
-        if (updatedWord === "") {
-            swal({
-                title: "Please enter a word.",
-                icon: "warning",
-            });
-        } else {
-            swal({
-                title: "Save all changes to word?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((willSave) => {
-                if (willSave) {
-                    let oldWord = null;
-
-                    let wordAudio = $_("#word-audio").files[0];
-                    let wordImage = $_("#word-image").files[0];
-
-                    if (!wordAudio) {
-                        // TODO: use JQuery AJAX (?)
-                        wordAudio = fetch(this.audiosrc(this.currentWord)).then(
-                            async (res) => await res.blob()
-                        );
-                    }
-                    if (!wordImage) {
-                        // TODO: use JQuery AJAX (?)
-                        wordImage = fetch(this.imgsrc(this.currentWord)).then(
-                            async (res) => await res.blob()
-                        );
-                    }
-                    if (this.currentWord !== updatedWord) {
-                        oldWord = this.currentWord;
-                        this.currentWord = updatedWord;
-                    }
-
-                    this.uploadFiles({
-                        audioFile: new File(
-                            [wordAudio],
-                            `${this.currentWord}.wav`,
-                            {
-                                type: "audio/wav",
-                            }
-                        ),
-                        imageFile: new File(
-                            [wordImage],
-                            `${this.currentWord}.jpg`,
-                            {
-                                type: "image/jpg",
-                            }
-                        ),
-                    });
-
-                    if (oldWord != null) {
-                        this.deleteWord(oldWord);
-                    }
-
-                    // this.fetchWordList();
-                }
-            });
-        }
-    },
     uploadConfirm() {
         swal({
             title: "Changes saved",
@@ -187,21 +123,6 @@ const editorData = {
                 });
             }
         });
-    },
-    uploadFiles(filesObj) {
-        $.ajax({
-            url: SERVER_URL + "/upload",
-            type: "POST",
-            dataType: "json",
-            processData: false,
-            data: { files: filesObj },
-            success: (res) => {
-                console.log("Files have been uploaded.");
-            },
-        });
-        // $.post(SERVER_URL + "/upload", { files: filesObj }, (res) => {
-        //     console.log("Files have been uploaded.");
-        // }).fail(errorCallback);
     },
     deleteWord(wordToDelete) {
         $.post(SERVER_URL + "/delete", { word: wordToDelete }, (res) => {
