@@ -68,7 +68,7 @@ const editorData = {
             title: "Changes saved",
             icon: "success",
         }).then(() => {
-            window.location.reload();
+            this.fetchWordList();
         });
     },
     deleteConfirm(word, index) {
@@ -91,7 +91,7 @@ const editorData = {
                         let wordToDelete = this.wordList.splice(index, 1)[0];
                         this.currentWord = this.wordList[0];
                         this.deleteWord(wordToDelete);
-                        window.location.reload();
+                        this.fetchWordList();
                     }
                 });
             }
