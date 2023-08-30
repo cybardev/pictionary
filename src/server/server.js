@@ -70,13 +70,13 @@ function reqLogger(reqType, url) {
 }
 
 /**
- * Move a file in the filesystem to a given location
+ * Save a file to a given location in the filesystem
  *
- * @param {File} file file object to move in filesystem
- * @param {string} targetPath location to move file to
+ * @param {File} file file object to save in filesystem
+ * @param {string} targetPath location to save file to
  * @returns {boolean} success status
  */
-function moveFile(file, targetPath) {
+function saveFile(file, targetPath) {
     let error = null;
 
     file.mv(targetPath, (err) => {
@@ -86,6 +86,33 @@ function moveFile(file, targetPath) {
     // the only time loosely-typed equality checking is excusable:
     // checking if something is undefined
     return error == null;
+}
+
+function moveFile(sourcePath, targetPath) {
+    let status = "";
+
+    fs.readFileSync(sourcePath, (err, data) => {
+        fs.writeFileSync(targetPath, data, (err) => {
+            fs.unlinkSync(sourcePath, () => {
+                status = err ? err : `File moved to ${targetPath}`;
+            });
+        });
+    });
+
+    return status;
+}
+
+function deleteMediaFile(media_name, media_path) {
+    let status = "";
+
+    fs.unlinkSync(
+        `${path.resolve(__dirname, "../../" + media_path)}/${media_name}`,
+        (err) => {
+            status = err ? err : `Deleted ${media_name}`;
+        }
+    );
+
+    return status;
 }
 
 /**
@@ -143,9 +170,8 @@ server.get("/wordlist", (req, res) => {
  */
 server.post("/upload", (req, res) => {
     reqLogger("POST", req.url);
-    console.log(req.body);
 
-    //check that files exist
+    // handle uploading of new word
     if (req.files) {
         //add files to variables
         let imageFile = req.files.imageFile;
@@ -156,10 +182,10 @@ server.post("/upload", (req, res) => {
 
         //move files to new loaction in server
         if (
-            moveFile(imageFile, `../../${IMAGE_PATH}/${req.body.fileName}.jpg`)
+            saveFile(imageFile, `../../${IMAGE_PATH}/${req.body.fileName}.jpg`)
         ) {
             if (
-                moveFile(
+                saveFile(
                     audioFile,
                     `../../${AUDIO_PATH}/${req.body.fileName}.wav`
                 )
@@ -170,6 +196,22 @@ server.post("/upload", (req, res) => {
             }
         } else {
             console.log("Could not upload Image File.");
+        }
+    } else {
+        // handle updating of existing word
+        if (req.body.oldWord !== "newWord") {
+            console.log(
+                moveFile(
+                    `../../${AUDIO_PATH}/${req.body.oldWord}.wav`,
+                    `../../${AUDIO_PATH}/${req.body.newWord}.wav`
+                )
+            );
+            console.log(
+                moveFile(
+                    `../../${IMAGE_PATH}/${req.body.oldWord}.jpg`,
+                    `../../${IMAGE_PATH}/${req.body.newWord}.jpg`
+                )
+            );
         }
     }
 });
@@ -182,35 +224,17 @@ server.post("/upload", (req, res) => {
 server.post("/delete", (req, res) => {
     reqLogger("POST", req.url);
 
+    let responses = [];
+
     // delete audio file
-    fs.unlinkSync(
-        `${path.resolve(__dirname, "../../" + AUDIO_PATH)}/${
-            req.body.word
-        }.wav`,
-        (err) => {
-            if (err) {
-                res.send(err);
-            } else {
-                console.log(`Deleted ${req.body.word}.wav`);
-            }
-        }
-    );
+    responses.push(deleteMediaFile(`${req.body.word}.wav`, AUDIO_PATH));
 
     // delete image file except if it's the placeholder image
-    if (req.body.word != "newWord") {
-        fs.unlinkSync(
-            `${path.resolve(__dirname, "../../" + IMAGE_PATH)}/${
-                req.body.word
-            }.jpg`,
-            (err) => {
-                if (err) {
-                    res.send(err);
-                } else {
-                    console.log(`Deleted ${req.body.word}.jpg`);
-                }
-            }
-        );
+    if (req.body.word !== "newWord") {
+        responses.push(deleteMediaFile(`${req.body.word}.jpg`, IMAGE_PATH));
     }
+
+    res.send({ responses: responses });
 });
 
 /**
