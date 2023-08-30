@@ -27,28 +27,17 @@
         </header>
         <main>
             <section x-data="adminData">
-                <form
-                    @submit.prevent="authenticate(
-                        $refs.username.value,
-                        $refs.passphrase.value
-                    )"
-                >
+                <form :action="`${SERVER_URL}/authenticate`" method="POST">
                     <header>
                         <h2>Authentication Request</h2>
                     </header>
                     <label for="username">Username:</label>
-                    <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        x-ref="username"
-                    />
+                    <input type="text" name="username" id="username" />
                     <label for="passphrase">Password:</label>
                     <input
                         :type="showPass ? 'text' : 'password'"
                         name="passphrase"
                         id="passphrase"
-                        x-ref="passphrase"
                     />
                     <div>
                         <input
