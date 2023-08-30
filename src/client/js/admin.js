@@ -12,40 +12,37 @@ const SERVER_URL = "http://140.184.230.209:40608";
 // JQuery-like shorthand for referencing DOM objects
 const $_ = (el) => document.querySelector(el);
 
+const errorCallback = (err) => console.error(err.responseText);
+
 /**
  * Logs out user when page is not visible
  *
  * Author: Sheikh Saad Abdullah
  */
-document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "hidden") {
-        navigator.sendBeacon(SERVER_URL + "/logoff");
-    }
-});
+if ($_("body").getAttribute("id") !== "editor-body") {
+    document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+            navigator.sendBeacon(SERVER_URL + "/logoff");
+        }
+    });
+}
 
 // data required for the admin page
 const adminData = {
     showPass: false,
     authenticate(username, passphrase) {
-        // TODO: use JQuery AJAX
-        fetch(SERVER_URL + "/authenticate", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
+        $.post(
+            SERVER_URL + "/authenticate",
+            {
                 username: username,
                 passphrase: passphrase,
-            }),
-        }).then((res) => {
-            if (res.ok) {
+            },
+            (res) => {
                 window.location.replace("../../../admin/editor.html");
-            } else {
-                Swal.fire(
-                    "Incorrect username or passphrase.\nPlease try again."
-                );
             }
-        });
+        ).fail(
+            Swal.fire("Incorrect username or passphrase.\nPlease try again.")
+        );
     },
 };
 
@@ -94,7 +91,7 @@ const editorData = {
         });
     },
     saveChanges(event) {
-        let updatedWord = $_("h1").innerText;
+        let updatedWord = $_("#word-text").value;
 
         if (updatedWord === "") {
             swal({
@@ -115,13 +112,13 @@ const editorData = {
                     let wordImage = $_("#word-image").files[0];
 
                     if (!wordAudio) {
-                        // TODO: use JQuery AJAX
+                        // TODO: use JQuery AJAX (?)
                         wordAudio = fetch(this.audiosrc(this.currentWord)).then(
                             async (res) => await res.blob()
                         );
                     }
                     if (!wordImage) {
-                        // TODO: use JQuery AJAX
+                        // TODO: use JQuery AJAX (?)
                         wordImage = fetch(this.imgsrc(this.currentWord)).then(
                             async (res) => await res.blob()
                         );
@@ -133,14 +130,14 @@ const editorData = {
 
                     this.uploadFiles({
                         audioFile: new File(
-                            wordAudio,
+                            [wordAudio],
                             `${this.currentWord}.wav`,
                             {
                                 type: "audio/wav",
                             }
                         ),
                         imageFile: new File(
-                            wordImage,
+                            [wordImage],
                             `${this.currentWord}.jpg`,
                             {
                                 type: "image/jpg",
@@ -148,14 +145,22 @@ const editorData = {
                         ),
                     });
 
-                    if (oldWord) {
-                        deleteWord(oldWord);
+                    if (oldWord != null) {
+                        this.deleteWord(oldWord);
                     }
 
-                    this.fetchWordList();
+                    // this.fetchWordList();
                 }
             });
         }
+    },
+    uploadConfirm() {
+        swal({
+            title: "Changes saved",
+            icon: "success",
+        }).then(() => {
+            window.location.reload();
+        });
     },
     deleteConfirm(word, index) {
         // double-check if user wants to remove word from list
@@ -176,7 +181,7 @@ const editorData = {
                         // delete 1 word from given index (currently selected)
                         let wordToDelete = this.wordList.splice(index, 1)[0];
                         this.currentWord = this.wordList[0];
-                        deleteWord(wordToDelete);
+                        this.deleteWord(wordToDelete);
                         this.fetchWordList();
                     }
                 });
@@ -184,31 +189,23 @@ const editorData = {
         });
     },
     uploadFiles(filesObj) {
-        // TODO: use JQuery AJAX
-        fetch(SERVER_URL + "/upload", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ files: filesObj }),
-        }).then((res) => {
-            if (res.ok) {
+        $.ajax({
+            url: SERVER_URL + "/upload",
+            type: "POST",
+            dataType: "json",
+            processData: false,
+            data: { files: filesObj },
+            success: (res) => {
                 console.log("Files have been uploaded.");
-            }
+            },
         });
+        // $.post(SERVER_URL + "/upload", { files: filesObj }, (res) => {
+        //     console.log("Files have been uploaded.");
+        // }).fail(errorCallback);
     },
     deleteWord(wordToDelete) {
-        // TODO: use JQuery AJAX
-        fetch(SERVER_URL + "/delete", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ word: wordToDelete }),
-        }).then((res) => {
-            if (res.ok) {
-                console.log("Word has been deleted.");
-            }
-        });
+        $.post(SERVER_URL + "/delete", { word: wordToDelete }, (res) => {
+            console.log("Word has been deleted.");
+        }).fail(errorCallback);
     },
 };

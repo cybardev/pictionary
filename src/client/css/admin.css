@@ -25,6 +25,7 @@
     width: 50vw;
     height: 90vh;
     overflow: auto;
+    margin-inline: 50px;
 }
 
 #editor-header-img {
@@ -36,16 +37,30 @@
     display: block;
 }
 
-#editor-header > section {
+#editor-header > form {
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 82vh;
 }
 
-#editor-header > section > hr {
+#editor-header > form > hr {
     margin-block: 30px;
 }
 
-#editor-header > section > div > div > input {
+#editor-header > form > div > div > input {
     margin-inline: auto;
+}
+
+#word-text {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+#word-text-old {
+    display: none;
 }
 
 .editor-list-item > button {

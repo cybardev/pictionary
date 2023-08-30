@@ -16,12 +16,28 @@
             src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
         ></script>
     </head>
-    <body x-data="editorData" id="editor-body">
-        <header id="editor-header" x-init="fetchWordList()">
-            <section>
+    <body x-data="editorData" id="editor-body" x-init="fetchWordList">
+        <header id="editor-header">
+            <form
+                :action="`${SERVER_URL}/upload`"
+                enctype="multipart/form-data"
+                method="POST"
+                @submit="uploadConfirm"
+            >
                 <div>
-                    <h1 contenteditable="true" x-text="currentWord"></h1>
+                    <input
+                        id="word-text"
+                        type="text"
+                        name="fileName"
+                        :value="currentWord"
+                    />
                     <p>(click the word above to edit)</p>
+                    <input
+                        id="word-text-old"
+                        type="text"
+                        name="oldName"
+                        :value="currentWord"
+                    />
                 </div>
                 <hr />
                 <div>
@@ -40,7 +56,7 @@
                             type="file"
                             id="word-audio"
                             name="audioFile"
-                            accept="audio/wav"
+                            accept=".wav"
                             @change="updateAudioPreview"
                         />
                     </div>
@@ -66,15 +82,15 @@
                 <hr />
                 <div>
                     <button type="button" @click="cancelChanges">Cancel</button>
-                    <button type="button" @click="saveChanges">Save</button>
+                    <button type="submit">Save</button>
                     <button type="button" @click="addNewWord">
                         Add New Word
                     </button>
                 </div>
-            </section>
+            </form>
         </header>
         <fieldset id="editor-list">
-            <legend><h2>Word List</h2></legend>
+            <legend><h1>Word List</h1></legend>
             <template x-for="(word, index) in wordList">
                 <div class="editor-list-item">
                     <input
