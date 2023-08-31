@@ -7,7 +7,8 @@
  */
 
 //creates conection to server url
-const SERVER_URL = "http://140.184.230.209:40608";
+const SERVER_URL = "http://" + "localhost" + ":40608";
+// const SERVER_URL = "http://" + "140.184.230.209" + ":40608";
 
 // JQuery-like shorthand for referencing DOM objects
 const $_ = (el) => document.querySelector(el);
@@ -16,7 +17,32 @@ const errorCallback = (err) => console.error(err.responseText);
 
 // data required for the admin page
 const adminData = {
+    // properties
+    username: "",
+    passphrase: "",
     showPass: false,
+    authenticated: false,
+
+    // methods
+    authenticate() {
+        // check if password is correct
+        $.post(
+            SERVER_URL + "/authenticate",
+            {
+                username: this.username,
+                passphrase: this.passphrase,
+            },
+            (res) => {
+                this.authenticated = res.authenticated;
+                if (!this.authenticated) {
+                    swal({
+                        title: "Incorrect Username or Password",
+                        icon: "error",
+                    });
+                }
+            }
+        );
+    },
 };
 
 // data required for the editor page
