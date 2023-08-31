@@ -137,7 +137,7 @@
                         <div class="row">
                             <section class="col d-flex justify-content-center">
                                 <!-- Options Buttons -->
-                                <template x-for="word in wordOptions">
+                                <template x-for="(word, index) in wordOptions" :key="index">
                                     <button
                                         class="m-3"
                                         @click="evaluateResponse(word)"
@@ -240,7 +240,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- word bank rows -->
-                        <template x-for="word in wordList">
+                        <template x-for="(word, index) in wordList" :key="index">
                             <div
                                 class="preview-word d-flex justify-content-between"
                             >
