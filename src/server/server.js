@@ -126,11 +126,9 @@ function deleteMediaFile(media_name, media_path) {
 server.post("/authenticate", (req, res) => {
     reqLogger("POST", req.url);
 
-    if (req.body.passphrase === USERS[req.body.username]) {
-        return res.sendFile(path.resolve(__dirname, "../../admin/editor.html"));
-    } else {
-        return res.sendFile(path.resolve(__dirname, "../../admin/denied.html"));
-    }
+    return res.status(200).send({
+        authenticated: req.body.passphrase === USERS[req.body.username],
+    });
 });
 
 /**

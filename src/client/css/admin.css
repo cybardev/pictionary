@@ -1,8 +1,16 @@
 @import url("https://unpkg.com/mvp.css@1.12/mvp.css");
 
+[x-cloak] {
+    display: none !important;
+}
+
 :root {
     --editor-preview-width: 40vw;
     --editor-wordlist-width: calc(100vw - var(--editor-preview-width));
+}
+
+#authentication-form {
+    margin-inline: auto;
 }
 
 #username,
@@ -14,10 +22,11 @@
     overflow: hidden;
 }
 
-#editor-header {
+#editor-section {
     float: left;
     width: 40vw;
     height: 90vh;
+    margin-block: 48px;
 }
 
 #editor-list {
@@ -28,28 +37,29 @@
     margin-inline: 50px;
 }
 
-#editor-header-img {
+#editor-section-img {
     max-height: 200px;
     max-width: 256px;
 }
 
-#editor-header-img ~ button {
+#editor-section-img ~ button {
     display: block;
 }
 
-#editor-header > form {
+#editor-section > form {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     height: 82vh;
+    width: 32vw;
 }
 
-#editor-header > form > hr {
+#editor-section > form > hr {
     margin-block: 30px;
 }
 
-#editor-header > form > div > div > input {
+#editor-section > form > div > div > input {
     margin-inline: auto;
 }
 
