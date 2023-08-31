@@ -7,8 +7,7 @@
  */
 
 //creates conection to server url
-const SERVER_URL = "http://" + "localhost" + ":40608";
-// const SERVER_URL = "http://" + "140.184.230.209" + ":40608";
+const SERVER_URL = "http://" + "140.184.230.209" + ":40608";
 
 // JQuery-like shorthand for referencing DOM objects
 const $_ = (el) => document.querySelector(el);
