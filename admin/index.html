@@ -140,7 +140,7 @@
             </section>
             <fieldset id="editor-list">
                 <legend><h1>Word List</h1></legend>
-                <template x-for="(word, index) in wordList">
+                <template x-for="(word, index) in wordList" :key="index">
                     <div class="editor-list-item">
                         <input
                             type="radio"
